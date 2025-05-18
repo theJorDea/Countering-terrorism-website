@@ -1,6 +1,6 @@
-# Countering-terrorism-website
+# No-To-Terrorism-Website
 
-Информационный ресурс, посвященный профилактике терроризма и экстремизма.
+Информационный ресурс "Терроризму НЕТ", посвященный профилактике терроризма и экстремизма.
 
 ## Описание проекта
 
@@ -37,7 +37,7 @@
 1. Клонируйте репозиторий:
 
 ```
-git clone https://github.com/theJorDea/Countering-terrorism-website.git
+git clone https://github.com/theJorDea/No-To-Terrorism-Website.git
 ```
 
 2. Откройте файл index.html в браузере.
