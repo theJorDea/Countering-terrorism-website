@@ -1,21 +1,41 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Терроризму НЕТ</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <script src="script.js" defer></script>
 </head>
 <body>
     <header>
+        <div class="emergency-number">
+            <button class="copy-number" onclick="copyNumber('112')">
+                <div class="label">Единая служба спасения</div>
+                <div class="number">112</div>
+            </button>
+        </div>
         <div class="container">
-            <h1>Терроризму НЕТ</h1>
-            <nav>
-                <ul>
-                    <li><a href="index.html" class="active">Главная</a></li>
-                    <li><a href="about.html">О нас</a></li>
-                </ul>
-            </nav>
+            <div class="logo-container">
+                <img src="photoes/sticker.webp" alt="Логотип" class="logo-image">
+                <h1>Терроризму НЕТ</h1>
+            </div>
+            <div class="header-right">
+                <button class="menu-toggle">☰</button>
+                <nav>
+                    <ul>
+                        <li><a href="index.html" class="active">Главная</a></li>
+                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="history.html">История</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                        <li class="theme-toggle">
+                            <input type="checkbox" id="theme-toggle-checkbox" class="theme-toggle-checkbox">
+                            <label for="theme-toggle-checkbox" class="theme-toggle-label"></label>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </header>
 
@@ -38,7 +58,6 @@
                 <div class="image-container">
                     <figure>
                         <img src="photoes/18 мая 2025 г., 14_00_14.png" alt="Что такое терроризм?" class="terrorism-image">
-                        <figcaption>Терроризму - НЕТ!</figcaption>
                     </figure>
                 </div>
             </div>
@@ -81,9 +100,13 @@
 
     <footer>
         <div class="container">
-            <p>© 2023 Терроризму НЕТ. Все права защищены.</p>
+            <p>© 2025 Терроризму НЕТ. Все права защищены.</p>
             <p>Телефон доверия: <strong>8-800-100-00-00</strong></p>
         </div>
     </footer>
+
+    <a href="#" class="back-to-top">↑</a>
+    
+    <div id="copy-tooltip" class="copy-tooltip">Номер 112 скопирован в буфер обмена!</div>
 </body>
 </html> 
