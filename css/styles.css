@@ -4,7 +4,8 @@
     --text-color: #333;
     --header-bg: #e74c3c;
     --header-text: white;
-    --header-bg-scrolled: rgba(231, 76, 60, 0.6);
+    --header-bg-scrolled: rgba(231, 76, 60, 0.4);
+    --header-bg-scrolled-muted: rgba(180, 76, 60, 0.4);
     --header-backdrop-blur: 20px;
     --section-bg: #f2f2f2;
     --link-color: #3498db;
@@ -28,7 +29,8 @@
     --bg-color: #222;
     --text-color: #eee;
     --header-bg: #b83227;
-    --header-bg-scrolled: rgba(184, 50, 39, 0.6);
+    --header-bg-scrolled: rgba(184, 50, 39, 0.4);
+    --header-bg-scrolled-muted: rgba(150, 50, 39, 0.4);
     --header-text: #eee;
     --section-bg: #2a2a2a;
     --link-color: #5dade2;
@@ -106,7 +108,7 @@ header {
 /* Компактная шапка при прокрутке */
 header.compact {
     padding: 10px 0;
-    background-color: var(--header-bg-scrolled);
+    background-color: var(--header-bg-scrolled-muted);
     backdrop-filter: blur(var(--header-backdrop-blur));
     -webkit-backdrop-filter: blur(var(--header-backdrop-blur));
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
@@ -153,6 +155,12 @@ header .container {
     padding: 10px 20px;
     text-align: center;
     z-index: 100;
+    transition: all 0.3s ease;
+}
+
+header.compact .emergency-number {
+    padding: 8px 16px;
+    transform: translateY(-50%) scale(0.9);
 }
 
 @media (max-width: 1240px) {
@@ -189,6 +197,7 @@ header .container {
     display: flex;
     align-items: center;
     margin-top: 2px;
+    transition: all 0.3s ease;
 }
 
 .emergency-number .number::before {
@@ -196,9 +205,18 @@ header .container {
     margin-right: 5px;
 }
 
+header.compact .emergency-number .number {
+    font-size: 1.1rem;
+}
+
 .emergency-number .label {
     font-size: 0.7rem;
     opacity: 0.9;
+    transition: all 0.3s ease;
+}
+
+header.compact .emergency-number .label {
+    font-size: 0.65rem;
 }
 
 header h1 {
