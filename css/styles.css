@@ -4,6 +4,7 @@
     --text-color: #333;
     --header-bg: #b71c1c;
     --header-text: white;
+    --terror-case-title: #d84315;
     --header-bg-scrolled: rgba(183, 28, 28, 0.4);
     --header-bg-scrolled-muted: rgba(160, 25, 25, 0.4);
     --header-backdrop-blur: 20px;
@@ -29,6 +30,7 @@
     --bg-color: #222;
     --text-color: #eee;
     --header-bg: #8f0000;
+    --terror-case-title: #ff5722;
     --header-bg-scrolled: rgba(143, 0, 0, 0.4);
     --header-bg-scrolled-muted: rgba(120, 0, 0, 0.4);
     --header-text: #eee;
@@ -580,7 +582,8 @@ nav ul.show {
 .terror-case h3 {
     font-size: 1.5rem;
     margin-bottom: 20px;
-    color: var(--header-bg);
+    color: var(--terror-case-title);
+    font-weight: 600;
 }
 
 /* Responsive Styles */
