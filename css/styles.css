@@ -8,8 +8,9 @@
     --header-bg-scrolled: rgba(183, 28, 28, 0.4);
     --header-bg-scrolled-muted: rgba(160, 25, 25, 0.4);
     --header-backdrop-blur: 20px;
-    --section-bg: rgba(249, 246, 246, 0.7);
-    --section-bg-red-tint: rgba(250, 245, 245, 0.7);
+    --section-bg: rgba(249, 246, 246, 0.6);
+    --section-bg-red-tint: rgba(250, 245, 245, 0.6);
+    --section-backdrop-blur: 10px;
     --link-color: #3498db;
     --section-shadow: rgba(0, 0, 0, 0.1);
     --danger-bg: #ffe5e5;
@@ -35,8 +36,9 @@
     --header-bg-scrolled: rgba(143, 0, 0, 0.4);
     --header-bg-scrolled-muted: rgba(120, 0, 0, 0.4);
     --header-text: #eee;
-    --section-bg: rgba(45, 45, 45, 0.7);
-    --section-bg-red-tint: rgba(50, 42, 42, 0.7);
+    --section-bg: rgba(45, 45, 45, 0.6);
+    --section-bg-red-tint: rgba(50, 42, 42, 0.6);
+    --section-backdrop-blur: 10px;
     --section-shadow: rgba(0, 0, 0, 0.3);
     --danger-bg: #5e2323;
     --danger-border: #b83227;
@@ -134,7 +136,9 @@ header.compact {
     
     .info-section {
         background-color: var(--section-bg-red-tint);
-        opacity: 0.95;
+        opacity: 0.97;
+        /* Добавляем легкую тень внутрь для Firefox, чтобы имитировать матовость */
+        box-shadow: 0 3px 10px var(--section-shadow), inset 0 0 5px rgba(255, 255, 255, 0.1);
     }
 }
 
@@ -320,8 +324,9 @@ main {
     border-radius: 5px;
     box-shadow: 0 3px 10px var(--section-shadow);
     transition: background-color 0.3s ease, color 0.3s ease;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(var(--section-backdrop-blur));
+    -webkit-backdrop-filter: blur(var(--section-backdrop-blur));
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .flex-container {
