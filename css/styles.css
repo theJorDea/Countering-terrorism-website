@@ -1130,6 +1130,24 @@ body[data-page="history"] .history-image:hover {
     visibility: visible;
 }
 
+/* Logo link styling */
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--header-text);
+    transition: all 0.3s ease;
+}
+
+.logo-link:hover {
+    transform: translateY(-2px);
+}
+
+.logo-link:hover .logo-image {
+    transform: rotate(-10deg);
+    animation: pulse 1s ease-in-out;
+}
+
 /* Стили логотипа */
 .logo-container {
     display: flex;
