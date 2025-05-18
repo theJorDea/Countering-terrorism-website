@@ -1,4 +1,4 @@
-# Сайт о противодействии терроризму
+# Countering-terrorism-website
 
 Информационный ресурс, посвященный профилактике терроризма и экстремизма.
 
@@ -74,4 +74,4 @@ git clone https://github.com/theJorDea/Countering-terrorism-website.git
 
 Вместо загрузки изображений можно также использовать плейсхолдеры, например:
 - https://placehold.co/600x400?text=Безопасность
-- https://placehold.co/800x400?text=Профилактика+терроризма 
+- https://placehold.co/800x400?text=Профилактика+терроризма
