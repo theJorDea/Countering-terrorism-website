@@ -138,8 +138,14 @@ document.addEventListener('DOMContentLoaded', function() {
             if (this.hostname === window.location.hostname) {
                 e.preventDefault();
                 
-                // Анимация исчезновения текущей страницы
-                document.body.style.opacity = '0';
+                // Анимация исчезновения только содержимого страницы (main и footer), но не header
+                const mainContent = document.querySelector('main');
+                const footerContent = document.querySelector('footer');
+                const heroContent = document.querySelector('.hero');
+                
+                if (mainContent) mainContent.style.opacity = '0';
+                if (footerContent) footerContent.style.opacity = '0';
+                if (heroContent) heroContent.style.opacity = '0';
                 
                 // Переход на новую страницу после завершения анимации
                 setTimeout(function() {

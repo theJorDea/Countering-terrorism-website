@@ -97,8 +97,7 @@ body {
     color: var(--text-color);
     background-color: var(--bg-color);
     transition: background-color 0.3s ease, color 0.3s ease;
-    animation: fadeIn 0.5s ease-out forwards;
-    animation-delay: 0.1s;
+    animation: smoothFadeIn 0.5s ease-out forwards;
     opacity: 0;
 }
 
@@ -143,6 +142,7 @@ header {
     top: 0;
     z-index: 1000;
     transition: all 0.3s ease;
+    opacity: 1;
 }
 
 /* Компактная шапка при прокрутке */
@@ -333,6 +333,7 @@ nav ul li i {
     background-position: center;
     position: relative;
     transition: background-color 0.3s ease, color 0.3s ease;
+    animation: smoothFadeIn 0.5s ease-out forwards;
 }
 
 .hero-text-container {
@@ -353,6 +354,7 @@ nav ul li i {
     animation: fadeIn 1s ease-out forwards;
     animation-delay: 0.2s;
     opacity: 0;
+    animation-fill-mode: forwards;
 }
 
 .hero p {
@@ -365,6 +367,7 @@ nav ul li i {
     animation: fadeIn 1s ease-out forwards;
     animation-delay: 0.4s;
     opacity: 0;
+    animation-fill-mode: forwards;
 }
 
 .about-hero {
@@ -375,6 +378,7 @@ nav ul li i {
 /* Main Content */
 main {
     padding: 40px 0;
+    animation: smoothFadeIn 0.5s ease-out forwards;
 }
 
 .info-section {
@@ -654,6 +658,7 @@ footer {
     text-align: center;
     transition: background-color 0.3s ease, color 0.3s ease;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
+    animation: smoothFadeIn 0.5s ease-out forwards;
 }
 
 footer p {
@@ -1367,6 +1372,11 @@ header.compact h1 {
     to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes smoothFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 @keyframes slideInRight {
     from { opacity: 0; transform: translateX(30px); }
     to { opacity: 1; transform: translateX(0); }
@@ -1414,12 +1424,14 @@ header.compact h1 {
     animation: fadeIn 1s ease-out forwards;
     animation-delay: 0.2s;
     opacity: 0;
+    animation-fill-mode: forwards;
 }
 
 .hero p {
     animation: fadeIn 1s ease-out forwards;
     animation-delay: 0.4s;
     opacity: 0;
+    animation-fill-mode: forwards;
 }
 
 .logo-image {
@@ -1435,9 +1447,12 @@ header.compact h1 {
     animation: fadeIn 0.8s ease-out forwards;
 }
 
-/* Плавное появление страницы */
-body {
-    opacity: 0;
-    animation: fadeIn 0.5s ease-out forwards;
-    animation-delay: 0.1s;
+/* Плавное появление страницы, за исключением header */
+main, footer, .hero {
+    animation: smoothFadeIn 0.5s ease-out forwards;
+}
+
+/* Header не анимируется */
+header {
+    opacity: 1;
 } 
