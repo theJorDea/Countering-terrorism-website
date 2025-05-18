@@ -2,10 +2,10 @@
 :root {
     --bg-color: #f7f7f7;
     --text-color: #333;
-    --header-bg: #8e2de2;
+    --header-bg: #b71c1c;
     --header-text: white;
-    --header-bg-scrolled: rgba(142, 45, 226, 0.4);
-    --header-bg-scrolled-muted: rgba(120, 40, 190, 0.4);
+    --header-bg-scrolled: rgba(183, 28, 28, 0.4);
+    --header-bg-scrolled-muted: rgba(160, 25, 25, 0.4);
     --header-backdrop-blur: 20px;
     --section-bg: #f2f2f2;
     --link-color: #3498db;
@@ -28,9 +28,9 @@
 [data-theme="dark"] {
     --bg-color: #222;
     --text-color: #eee;
-    --header-bg: #6a1eb2;
-    --header-bg-scrolled: rgba(106, 30, 178, 0.4);
-    --header-bg-scrolled-muted: rgba(90, 25, 150, 0.4);
+    --header-bg: #8f0000;
+    --header-bg-scrolled: rgba(143, 0, 0, 0.4);
+    --header-bg-scrolled-muted: rgba(120, 0, 0, 0.4);
     --header-text: #eee;
     --section-bg: #2a2a2a;
     --link-color: #5dade2;
@@ -453,7 +453,7 @@ footer p {
 }
 
 .btn:hover {
-    background-color: #7928d1;
+    background-color: #9b0000;
 }
 
 /* Emergency Numbers */
@@ -683,7 +683,7 @@ nav ul.show {
 }
 
 .back-to-top:hover {
-    background-color: #7928d1;
+    background-color: #9b0000;
     transform: translateY(-3px);
 }
 
