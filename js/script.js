@@ -109,6 +109,45 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+    
+    // Анимация появления элементов при прокрутке
+    const animateOnScroll = function() {
+        const elements = document.querySelectorAll('.info-section, .text-content, .image-container');
+        
+        elements.forEach(element => {
+            const elementPosition = element.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+            
+            // Если элемент виден в окне просмотра
+            if (elementPosition < windowHeight - 100) {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }
+        });
+    };
+    
+    // Запускаем анимацию при загрузке и прокрутке страницы
+    window.addEventListener('scroll', animateOnScroll);
+    window.addEventListener('load', animateOnScroll);
+    
+    // Плавный переход между страницами
+    const pageLinks = document.querySelectorAll('nav a:not([href^="#"])');
+    pageLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Только для внутренних ссылок
+            if (this.hostname === window.location.hostname) {
+                e.preventDefault();
+                
+                // Анимация исчезновения текущей страницы
+                document.body.style.opacity = '0';
+                
+                // Переход на новую страницу после завершения анимации
+                setTimeout(function() {
+                    window.location.href = link.href;
+                }, 300);
+            }
+        });
+    });
 });
 
 // Функция копирования номера

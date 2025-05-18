@@ -97,6 +97,9 @@ body {
     color: var(--text-color);
     background-color: var(--bg-color);
     transition: background-color 0.3s ease, color 0.3s ease;
+    animation: fadeIn 0.5s ease-out forwards;
+    animation-delay: 0.1s;
+    opacity: 0;
 }
 
 .container {
@@ -287,12 +290,31 @@ nav ul li a {
     text-decoration: none;
     padding: 5px 10px;
     border-radius: 3px;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.2s;
+    position: relative;
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: var(--header-text);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+nav ul li a:hover::after,
+nav ul li a.active::after {
+    width: 80%;
 }
 
 nav ul li a:hover,
 nav ul li a.active {
     background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
 }
 
 nav ul li i {
@@ -328,6 +350,9 @@ nav ul li i {
     position: relative;
     z-index: 2;
     font-weight: bold;
+    animation: fadeIn 1s ease-out forwards;
+    animation-delay: 0.2s;
+    opacity: 0;
 }
 
 .hero p {
@@ -337,6 +362,9 @@ nav ul li i {
     position: relative;
     z-index: 2;
     color: var(--hero-text);
+    animation: fadeIn 1s ease-out forwards;
+    animation-delay: 0.4s;
+    opacity: 0;
 }
 
 .about-hero {
@@ -362,6 +390,7 @@ main {
     -webkit-backdrop-filter: blur(var(--section-backdrop-blur));
     border: none;
     text-align: left;
+    animation: fadeIn 0.8s ease-out forwards;
 }
 
 .info-section:hover {
@@ -698,11 +727,18 @@ footer strong {
     cursor: pointer;
     font-size: 1rem;
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .btn:hover {
     background-color: #9b0000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Emergency Numbers */
@@ -712,6 +748,12 @@ footer strong {
     gap: 20px;
     justify-content: space-between;
     margin-top: 20px;
+}
+
+/* Анимация для карточек контактной информации */
+@keyframes contactCardAppear {
+    0% { transform: scale(0.95); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
 }
 
 .emergency-item {
@@ -731,7 +773,13 @@ footer strong {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    animation: contactCardAppear 0.5s ease-out forwards;
 }
+
+.emergency-item:nth-child(1) { animation-delay: 0.1s; }
+.emergency-item:nth-child(2) { animation-delay: 0.2s; }
+.emergency-item:nth-child(3) { animation-delay: 0.3s; }
+.emergency-item:nth-child(4) { animation-delay: 0.4s; }
 
 .emergency-item:before {
     content: none;
@@ -740,6 +788,7 @@ footer strong {
 .emergency-item:hover {
     transform: translateY(-3px);
     box-shadow: none;
+    animation: pulse 1s ease-in-out infinite;
 }
 
 .emergency-item h3 {
@@ -773,6 +822,27 @@ footer strong {
     font-size: 0.9rem;
     opacity: 0.85;
     margin-top: 5px;
+}
+
+/* Анимация для копирования номера */
+@keyframes highlightPhone {
+    0% { color: var(--emergency-number-color); }
+    50% { color: #4CAF50; }
+    100% { color: var(--emergency-number-color); }
+}
+
+.copy-number:active .number {
+    animation: highlightPhone 0.8s ease-out;
+}
+
+/* Анимация для фото в разделе "О нас" */
+@keyframes imageFade {
+    from { opacity: 0.7; filter: grayscale(100%); }
+    to { opacity: 1; filter: grayscale(0%); }
+}
+
+.image-container img:hover {
+    animation: imageFade 0.5s forwards;
 }
 
 /* Contact Hero */
@@ -1065,6 +1135,7 @@ nav ul.show {
 
 .logo-container:hover .logo-image {
     transform: rotate(-10deg);
+    animation: pulse 1s ease-in-out;
 }
 
 /* Компактная шапка при прокрутке */
@@ -1144,6 +1215,7 @@ header.compact h1 {
     width: 100%;
     transition: background-color 0.3s ease, color 0.3s ease;
     margin-right: 20px;
+    animation: fadeIn 0.8s ease-out forwards;
 }
 
 .contact-label {
@@ -1287,4 +1359,85 @@ header.compact h1 {
 
 .contact-info-card p:last-child {
     margin-bottom: 0;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Применение анимаций */
+.info-section {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+.info-section:nth-child(even) .text-content {
+    animation: slideInLeft 0.9s ease-out forwards;
+}
+
+.info-section:nth-child(even) .image-container {
+    animation: slideInRight 0.9s ease-out forwards;
+}
+
+.info-section:nth-child(odd) .text-content {
+    animation: slideInRight 0.9s ease-out forwards;
+}
+
+.info-section:nth-child(odd) .image-container {
+    animation: slideInLeft 0.9s ease-out forwards;
+}
+
+.emergency-item:hover {
+    transform: translateY(-3px);
+    box-shadow: none;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+.hero h2 {
+    animation: fadeIn 1s ease-out forwards;
+    animation-delay: 0.2s;
+    opacity: 0;
+}
+
+.hero p {
+    animation: fadeIn 1s ease-out forwards;
+    animation-delay: 0.4s;
+    opacity: 0;
+}
+
+.logo-image {
+    transition: all 0.3s ease;
+}
+
+.logo-container:hover .logo-image {
+    transform: rotate(-10deg);
+    animation: pulse 1s ease-in-out;
+}
+
+.contact-info-card {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* Плавное появление страницы */
+body {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
+    animation-delay: 0.1s;
 } 
