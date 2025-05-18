@@ -45,6 +45,23 @@ git clone https://github.com/theJorDea/Countering-terrorism-website.git
 - Оптимизированные изображения через SVG
 - Современный дизайн с использованием градиентов
 
+## Настройка Git для Windows при работе с кириллицей
+
+Если у вас возникают проблемы с отображением кириллических символов в git log или коммитах, выполните следующие команды:
+
+```
+git config --global core.quotepath off
+git config --global i18n.commitencoding utf-8
+git config --global i18n.logoutputencoding utf-8
+```
+
+Для PowerShell также может потребоваться настройка кодировки консоли:
+
+```
+$OutputEncoding = [System.Text.Encoding]::UTF8
+chcp 65001
+```
+
 ## Лицензия
 
 Проект распространяется под открытой лицензией. Вы можете свободно использовать, модифицировать и распространять его.
