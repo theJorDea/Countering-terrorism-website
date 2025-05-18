@@ -53,14 +53,18 @@ git clone https://github.com/theJorDea/Countering-terrorism-website.git
 git config --global core.quotepath off
 git config --global i18n.commitencoding utf-8
 git config --global i18n.logoutputencoding utf-8
+git config --global core.precomposeunicode true
 ```
 
 Для PowerShell также может потребоваться настройка кодировки консоли:
 
 ```
 $OutputEncoding = [System.Text.Encoding]::UTF8
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 chcp 65001
 ```
+
+Обратите внимание, что при работе с кириллицей в Windows могут возникать проблемы с отображением первой буквы в сообщениях коммитов. Это связано с особенностями работы PowerShell и Git в Windows.
 
 ## Лицензия
 
