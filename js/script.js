@@ -111,7 +111,17 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (menuToggle) {
         menuToggle.addEventListener('click', function() {
+            const isExpanded = this.getAttribute('aria-expanded') === 'true' || false;
+            this.setAttribute('aria-expanded', !isExpanded);
+            
+            // Toggle the menu visibility
             nav.classList.toggle('show');
+            
+            if (nav.classList.contains('show')) {
+                document.body.classList.add('no-scroll'); // Use CSS class to prevent scrolling
+            } else {
+                document.body.classList.remove('no-scroll'); // Remove class to allow scrolling
+            }
         });
     }
     
@@ -121,6 +131,8 @@ document.addEventListener('DOMContentLoaded', function() {
         item.addEventListener('click', () => {
             if (window.innerWidth <= 768) {
                 nav.classList.remove('show');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                document.body.classList.remove('no-scroll'); // Use CSS class
             }
         });
     });

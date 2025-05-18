@@ -209,12 +209,20 @@ header .container {
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
 }
 
 .header-right {
     display: flex;
     align-items: center;
     margin-left: auto;
+    position: relative;
 }
 
 .emergency-number {
@@ -878,22 +886,309 @@ footer strong {
     background: none;
     border: none;
     color: var(--header-text);
-    font-size: 1.5rem;
     cursor: pointer;
     z-index: 100;
+    padding: 10px;
+    line-height: 1;
+    transition: transform 0.2s ease;
 }
 
-nav ul.show {
-    display: flex;
-    flex-direction: column;
-    background-color: var(--header-bg);
+.menu-toggle:hover {
+    transform: scale(1.05);
+}
+
+.menu-toggle:active {
+    transform: scale(0.95);
+}
+
+.menu-toggle-icon {
+    display: block;
+    width: 30px;
+    height: 25px;
+    position: relative;
+}
+
+.menu-toggle-line {
+    display: block;
+    width: 100%;
+    height: 4px;
+    background-color: var(--header-text);
     position: absolute;
-    top: 60px;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.menu-toggle-line:nth-child(1) { top: 0; }
+.menu-toggle-line:nth-child(2) { top: 10px; }
+.menu-toggle-line:nth-child(3) { top: 20px; }
+
+/* Simple animated hamburger menu */
+.menu-toggle[aria-expanded="true"] .menu-toggle-line:nth-child(1) {
+    transform: rotate(45deg);
+    top: 10px;
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle-line:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle-line:nth-child(3) {
+    transform: rotate(-45deg);
+    top: 10px;
+}
+
+/* Mobile nav menu when shown - with theme adaptations */
+nav.show {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 65px;
     left: 0;
     right: 0;
+    bottom: 0;
+    width: 100%;
     padding: 20px;
     box-shadow: 0 5px 10px var(--section-shadow);
     z-index: 99;
+    transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+/* Light theme menu styling - Fully transparent with blur */
+body:not([data-theme="dark"]) nav.show {
+    background-color: transparent; /* Fully transparent */
+    backdrop-filter: blur(15px); 
+    -webkit-backdrop-filter: blur(15px);
+    border: none;
+    box-shadow: 0 3px 15px var(--section-shadow);
+}
+
+/* Dark theme menu styling - Fully transparent with blur */
+body[data-theme="dark"] nav.show {
+    background-color: transparent; /* Fully transparent */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: none;
+    box-shadow: 0 3px 15px var(--section-shadow);
+}
+
+/* Menu items styling - Both themes - Light grayish/beige buttons */
+body:not([data-theme="dark"]) nav.show ul li a,
+body[data-theme="dark"] nav.show ul li a {
+    color: #222 !important; /* Dark text for both themes */
+    background-color: rgba(158, 1, 1, 0.4); /* Light grayish/beige color from image */
+    border-radius: 10px;
+    padding: 12px 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border: none;
+    font-weight: 500;
+    margin: 5px 0;
+    text-align: center;
+}
+
+body:not([data-theme="dark"]) nav.show ul li a:hover,
+body[data-theme="dark"] nav.show ul li a:hover {
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2), 
+                -2px -2px 6px rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+    background-color: #e5dddd; /* Slightly lighter on hover */
+}
+
+/* Active menu items with themed borders */
+body:not([data-theme="dark"]) nav.show ul li a.active {
+    padding: 10px 18px; /* Adjusted to compensate for border */
+}
+
+body[data-theme="dark"] nav.show ul li a.active {
+    background-color: rgba(158, 1, 1, 0.4);
+    border: 2px solid #8f0000; /* Burgundy for dark theme */
+    padding: 10px 18px; /* Adjusted to compensate for border */
+}
+
+/* Remove underline effect for mobile menu items */
+nav.show ul li a::after,
+nav.show ul li a:hover::after,
+nav.show ul li a.active::after {
+    display: none;
+}
+
+/* Theme toggle styling - Both themes - Same as other buttons */
+body:not([data-theme="dark"]) nav.show .theme-toggle,
+body[data-theme="dark"] nav.show .theme-toggle {
+    background-color: rgba(158, 1, 1, 0.4); /* Same as menu buttons */
+    border-radius: 25px;
+    padding: 10px 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border: none;
+    margin: 5px 0;
+    cursor: pointer;
+    position: relative;
+    width: 100%;  /* Make toggle container full width */
+}
+
+/* Make the entire theme toggle area clickable */
+body:not([data-theme="dark"]) nav.show .theme-toggle .theme-toggle-checkbox,
+body[data-theme="dark"] nav.show .theme-toggle .theme-toggle-checkbox {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    margin: 0;
+    cursor: pointer;
+    opacity: 0;
+    z-index: 10;  /* Ensure checkbox is above other elements */
+}
+
+/* Ensure the label is properly sized and positioned for the icon */
+body:not([data-theme="dark"]) nav.show .theme-toggle .theme-toggle-label,
+body[data-theme="dark"] nav.show .theme-toggle .theme-toggle-label {
+    position: relative;
+    display: inline-block; /* Consistent with global icon label style */
+    width: 28px;           /* Restore fixed width for the icon container */
+    height: 28px;          /* Restore fixed height for the icon container */
+    background-color: transparent; /* Consistent with global icon label style */
+    border-radius: 50%;    /* Consistent with global icon label style */
+    cursor: pointer; /* Label itself is also part of the clickable area due to overlay */
+    transition: transform 0.3s ease; /* Consistent with global icon label style */
+    overflow: hidden;      /* Consistent with global icon label style */
+    /* Centering of ::before (the icon) is handled by its own absolute positioning */
+}
+
+/* Hover animation for the icon's label within the mobile menu */
+body:not([data-theme="dark"]) nav.show .theme-toggle:hover .theme-toggle-label,
+body[data-theme="dark"] nav.show .theme-toggle:hover .theme-toggle-label {
+    transform: scale(1.1);
+}
+
+/* Theme name label styling - Both themes */
+body:not([data-theme="dark"]) nav.show .theme-name-label,
+body[data-theme="dark"] nav.show .theme-name-label {
+    color: #222 !important; /* Dark text for both themes */
+    font-weight: 500;
+}
+
+/* Theme toggle icon specifics */
+body:not([data-theme="dark"]) nav.show .theme-toggle-label:before,
+body[data-theme="dark"] nav.show .theme-toggle-label:before {
+    color: #222 !important; /* Dark icon for both themes */
+}
+
+@media (max-width: 768px) {
+    header .container {
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    
+    .logo-container {
+        justify-content: flex-start;
+    }
+    
+    nav {
+        display: none;
+    }
+    
+    .menu-toggle {
+        display: block;
+        padding: 10px;
+    }
+    
+    nav.show {
+        height: auto;
+        min-height: calc(100vh - 65px);
+        overflow: visible;
+    }
+    
+    nav.show ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        max-height: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    
+    nav.show ul li {
+        margin: 10px 0;
+        width: 100%;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    nav.show ul li a {
+        font-size: 1.2rem;
+        padding: 12px;
+        width: 100%;
+        display: block;
+        margin: 0 auto;
+    }
+    
+    nav.show ul li .theme-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+    
+    .theme-name-label {
+        font-size: 1.2rem;
+    }
+    
+    .theme-toggle-label,
+    .theme-name-label {
+        display: inline-flex;
+        align-items: center;
+    }
+    
+    .flex-container {
+        flex-direction: column;
+    }
+    
+    .flex-container.reverse {
+        flex-direction: column;
+    }
+    
+    .text-content,
+    .image-container {
+        width: 100%;
+    }
+    
+    .terrorism-image {
+        max-height: 250px;
+    }
+    
+    .emergency-item {
+        min-width: 150px;
+        flex-basis: calc(50% - 10px);
+        margin-bottom: 10px;
+    }
+    
+    .floating-emergency-button {
+        padding: 8px 12px;
+    }
+    
+    .floating-emergency-button .label {
+        font-size: 0.8rem;
+    }
+    
+    .floating-emergency-button .number {
+        font-size: 1rem;
+    }
+    
+    .floating-emergency.semi-collapsed .floating-emergency-button {
+        padding: 6px 14px;
+    }
+    
+    .floating-emergency.semi-collapsed .number {
+        font-size: 1rem;
+    }
 }
 
 /* History Page Styles */
@@ -971,87 +1266,6 @@ body[data-page="history"] .history-image:hover {
     }
 }
 
-@media (max-width: 768px) {
-    header .container {
-        justify-content: space-between;
-        align-items: center;
-        padding-right: 0;
-    }
-    
-    nav {
-        display: none;
-    }
-    
-    .menu-toggle {
-        display: block;
-        margin-right: 100px;
-    }
-    
-    nav.show {
-        display: block;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background-color: var(--header-bg);
-        padding: 20px;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    }
-    
-    nav ul {
-        flex-direction: column;
-        margin-top: 0;
-    }
-    
-    nav ul li {
-        margin: 10px 0;
-        text-align: center;
-    }
-    
-    .flex-container {
-        flex-direction: column;
-    }
-    
-    .flex-container.reverse {
-        flex-direction: column;
-    }
-    
-    .text-content,
-    .image-container {
-        width: 100%;
-    }
-    
-    .terrorism-image {
-        max-height: 250px;
-    }
-    
-    .emergency-item {
-        min-width: 150px;
-        flex-basis: calc(50% - 10px);
-        margin-bottom: 10px;
-    }
-    
-    .floating-emergency-button {
-        padding: 8px 12px;
-    }
-    
-    .floating-emergency-button .label {
-        font-size: 0.8rem;
-    }
-    
-    .floating-emergency-button .number {
-        font-size: 1rem;
-    }
-    
-    .floating-emergency.semi-collapsed .floating-emergency-button {
-        padding: 6px 14px;
-    }
-    
-    .floating-emergency.semi-collapsed .number {
-        font-size: 1rem;
-    }
-}
-
 @media (max-width: 576px) {
     .emergency-number {
         right: 15px;
@@ -1112,7 +1326,12 @@ body[data-page="history"] .history-image:hover {
     }
     
     .menu-toggle {
-        margin-right: 70px;
+        display: block;
+        padding: 8px;
+    }
+    
+    .logo-container {
+        margin-right: auto;
     }
     
     .floating-emergency {
@@ -1131,6 +1350,11 @@ body[data-page="history"] .history-image:hover {
     
     .floating-emergency.semi-collapsed .number {
         font-size: 0.9rem;
+    }
+    
+    header .container {
+        padding-left: 20px;
+        padding-right: 20px;
     }
 }
 
@@ -1767,4 +1991,78 @@ section, div, nav, footer {
     .floating-emergency-button .number {
         font-size: 0.9rem;
     }
+}
+
+/* Default text color for items in opened menu (caters to dark theme panel) */
+nav.show ul li a,
+nav.show .theme-name-label {
+    color: var(--header-text); /* This is light, good for dark panel */
+}
+
+/* Special handling for the theme toggle icon color inside the opened menu */
+nav.show .theme-toggle .theme-toggle-label:before {
+    color: var(--header-text); /* Default to header text (light for dark panel) */
+}
+
+/* Override text and theme icon for light theme (when panel is light) */
+body[data-theme="light"] nav.show ul li a,
+body[data-theme="light"] nav.show .theme-name-label,
+body[data-theme="light"] nav.show .theme-toggle .theme-toggle-label:before {
+    color: #000000; /* Black for light panel */
+}
+
+/* Original theme toggle icon color (for header) - ensure it's not affected if it was white */
+.theme-toggle-label:before {
+    content: "\f185"; /* Font Awesome sun icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    color: white; /* This is the default for the header icon */
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+.theme-toggle-checkbox:checked + .theme-toggle-label:before {
+    content: "\f186"; /* Font Awesome moon icon */
+    font-size: 18px;
+    transform: translate(-50%, -50%) rotate(360deg);
+    /* Color will be inherited or set by nav.show specific rules */
+}
+
+/* Theme toggle hover effect */
+body:not([data-theme="dark"]) nav.show .theme-toggle:hover,
+body[data-theme="dark"] nav.show .theme-toggle:hover {
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
+    /* Keep the same background color on hover */
+    background-color: rgba(158, 1, 1, 0.4);
+}
+
+/* Add a class to prevent body scrolling when menu is open */
+.no-scroll {
+    overflow: hidden !important;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+/* Ensure text in light theme menu is black */
+body:not([data-theme="dark"]) nav.show ul li a,
+body:not([data-theme="dark"]) nav.show .theme-name-label,
+body:not([data-theme="dark"]) nav.show .theme-toggle .theme-toggle-label:before {
+    color: #000000 !important; /* Force black for light theme */
+}
+
+/* Strengthen dark theme text contrast */
+body[data-theme="dark"] nav.show ul li a,
+body[data-theme="dark"] nav.show .theme-name-label,
+body[data-theme="dark"] nav.show .theme-toggle .theme-toggle-label:before {
+    color: white !important; /* Force white for dark theme */
+}
+
+body[data-theme="dark"] nav.show ul li a:hover {
+    color: white !important;
 } 
