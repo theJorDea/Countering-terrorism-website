@@ -142,7 +142,9 @@ header {
     top: 0;
     z-index: 1000;
     transition: all 0.3s ease;
-    opacity: 1;
+    opacity: 1 !important;
+    animation: none !important;
+    visibility: visible !important;
 }
 
 /* Компактная шапка при прокрутке */
@@ -1455,4 +1457,20 @@ main, footer, .hero {
 /* Header не анимируется */
 header {
     opacity: 1;
+}
+
+/* Отключаем все анимации для элементов внутри header */
+header *,
+header .logo-container,
+header .logo-image,
+header nav,
+header nav ul,
+header nav ul li,
+header nav ul li a,
+header .emergency-number,
+header .container {
+    animation: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none;
 } 

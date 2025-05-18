@@ -1,4 +1,22 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Предотвращаем проблемы с загрузкой и применяем нужные стили
+    document.body.style.opacity = '1';
+    document.documentElement.style.opacity = '1';
+    
+    // Гарантируем, что header всегда виден при загрузке страницы
+    const header = document.querySelector('header');
+    if (header) {
+        header.style.opacity = '1';
+        header.style.visibility = 'visible';
+        
+        // Устанавливаем стили для всех внутренних элементов header
+        const headerElements = header.querySelectorAll('*');
+        headerElements.forEach(el => {
+            el.style.opacity = '1';
+            el.style.visibility = 'visible';
+        });
+    }
+    
     // Тема
     const themeToggle = document.getElementById('theme-toggle-checkbox');
     
@@ -22,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Компактная шапка при прокрутке
-    const header = document.querySelector('header');
     
     // Сразу проверим позицию скролла для корректной инициализации
     if (window.scrollY > 20) {
@@ -115,13 +132,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const elements = document.querySelectorAll('.info-section, .text-content, .image-container');
         
         elements.forEach(element => {
-            const elementPosition = element.getBoundingClientRect().top;
-            const windowHeight = window.innerHeight;
-            
-            // Если элемент виден в окне просмотра
-            if (elementPosition < windowHeight - 100) {
-                element.style.opacity = '1';
-                element.style.transform = 'translateY(0)';
+            // Проверяем, что элемент не находится внутри header
+            if (!element.closest('header')) {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                // Если элемент виден в окне просмотра
+                if (elementPosition < windowHeight - 100) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
             }
         });
     };
@@ -146,6 +166,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (mainContent) mainContent.style.opacity = '0';
                 if (footerContent) footerContent.style.opacity = '0';
                 if (heroContent) heroContent.style.opacity = '0';
+                
+                // Убедимся, что header остается видимым
+                if (header) {
+                    header.style.opacity = '1';
+                    header.style.visibility = 'visible';
+                }
                 
                 // Переход на новую страницу после завершения анимации
                 setTimeout(function() {
