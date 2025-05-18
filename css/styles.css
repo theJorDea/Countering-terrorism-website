@@ -4,8 +4,8 @@
     --text-color: #333;
     --header-bg: #e74c3c;
     --header-text: white;
-    --header-bg-scrolled: rgba(231, 76, 60, 0.85);
-    --header-backdrop-blur: 10px;
+    --header-bg-scrolled: rgba(231, 76, 60, 0.6);
+    --header-backdrop-blur: 20px;
     --section-bg: #f2f2f2;
     --link-color: #3498db;
     --section-shadow: rgba(0, 0, 0, 0.1);
@@ -28,7 +28,7 @@
     --bg-color: #222;
     --text-color: #eee;
     --header-bg: #b83227;
-    --header-bg-scrolled: rgba(184, 50, 39, 0.85);
+    --header-bg-scrolled: rgba(184, 50, 39, 0.6);
     --header-text: #eee;
     --section-bg: #2a2a2a;
     --link-color: #5dade2;
@@ -109,6 +109,23 @@ header.compact {
     background-color: var(--header-bg-scrolled);
     backdrop-filter: blur(var(--header-backdrop-blur));
     -webkit-backdrop-filter: blur(var(--header-backdrop-blur));
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Safari-specific styles */
+@supports (-webkit-backdrop-filter: none) {
+    header.compact {
+        backdrop-filter: blur(var(--header-backdrop-blur));
+        -webkit-backdrop-filter: blur(var(--header-backdrop-blur));
+    }
+}
+
+/* Firefox-specific styles (which doesn't support backdrop-filter) */
+@-moz-document url-prefix() {
+    header.compact {
+        background-color: var(--header-bg);
+        opacity: 0.95;
+    }
 }
 
 header .container {

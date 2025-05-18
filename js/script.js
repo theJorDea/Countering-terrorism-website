@@ -23,8 +23,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Компактная шапка при прокрутке
     const header = document.querySelector('header');
+    
+    // Сразу проверим позицию скролла для корректной инициализации
+    if (window.scrollY > 20) {
+        header.classList.add('compact');
+    }
+    
     window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) {
+        if (window.scrollY > 20) {
             header.classList.add('compact');
         } else {
             header.classList.remove('compact');
