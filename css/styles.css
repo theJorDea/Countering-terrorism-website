@@ -8,7 +8,8 @@
     --header-bg-scrolled: rgba(183, 28, 28, 0.4);
     --header-bg-scrolled-muted: rgba(160, 25, 25, 0.4);
     --header-backdrop-blur: 20px;
-    --section-bg: #f2f2f2;
+    --section-bg: rgba(249, 246, 246, 0.8);
+    --section-bg-red-tint: rgba(250, 240, 240, 0.8);
     --link-color: #3498db;
     --section-shadow: rgba(0, 0, 0, 0.1);
     --danger-bg: #ffe5e5;
@@ -34,8 +35,8 @@
     --header-bg-scrolled: rgba(143, 0, 0, 0.4);
     --header-bg-scrolled-muted: rgba(120, 0, 0, 0.4);
     --header-text: #eee;
-    --section-bg: #2a2a2a;
-    --link-color: #5dade2;
+    --section-bg: rgba(45, 45, 45, 0.8);
+    --section-bg-red-tint: rgba(55, 40, 40, 0.8);
     --section-shadow: rgba(0, 0, 0, 0.3);
     --danger-bg: #5e2323;
     --danger-border: #b83227;
@@ -128,6 +129,11 @@ header.compact {
 @-moz-document url-prefix() {
     header.compact {
         background-color: var(--header-bg);
+        opacity: 0.95;
+    }
+    
+    .info-section {
+        background-color: var(--section-bg-red-tint);
         opacity: 0.95;
     }
 }
@@ -309,11 +315,14 @@ main {
 
 .info-section {
     margin-bottom: 40px;
-    background-color: var(--section-bg);
+    background-color: var(--section-bg-red-tint);
     padding: 30px;
     border-radius: 5px;
     box-shadow: 0 3px 10px var(--section-shadow);
     transition: background-color 0.3s ease, color 0.3s ease;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-left: 3px solid rgba(183, 28, 28, 0.3);
 }
 
 .flex-container {
