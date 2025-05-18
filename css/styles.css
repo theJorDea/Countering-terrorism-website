@@ -4,7 +4,7 @@
     --text-color: #333;
     --header-bg: #b71c1c;
     --header-text: white;
-    --terror-case-title: #d84315;
+    --terror-case-title: #e53935;
     --header-bg-scrolled: rgba(183, 28, 28, 0.4);
     --header-bg-scrolled-muted: rgba(160, 25, 25, 0.4);
     --header-backdrop-blur: 20px;
@@ -30,7 +30,7 @@
     --bg-color: #222;
     --text-color: #eee;
     --header-bg: #8f0000;
-    --terror-case-title: #ff5722;
+    --terror-case-title: #f44336;
     --header-bg-scrolled: rgba(143, 0, 0, 0.4);
     --header-bg-scrolled-muted: rgba(120, 0, 0, 0.4);
     --header-text: #eee;
