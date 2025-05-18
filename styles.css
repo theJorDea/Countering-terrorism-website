@@ -130,6 +130,7 @@ main {
     gap: 30px;
     margin-top: 20px;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .flex-container.reverse {
@@ -137,14 +138,16 @@ main {
 }
 
 .text-content {
-    flex: 2;
+    flex: 3;
+    min-width: 300px;
 }
 
 .image-container {
-    flex: 1;
+    flex: 2;
     display: flex;
     align-items: center;
     justify-content: center;
+    min-width: 300px;
 }
 
 .terrorism-image {
@@ -152,6 +155,22 @@ main {
     height: auto;
     border-radius: 5px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    object-fit: contain;
+    max-height: 350px;
+}
+
+figure {
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+figcaption {
+    margin-top: 10px;
+    font-style: italic;
+    color: #555;
+    font-size: 0.9rem;
+    text-align: center;
 }
 
 .danger-signs {
@@ -210,5 +229,15 @@ footer p {
     
     .flex-container.reverse {
         flex-direction: column;
+    }
+    
+    .text-content,
+    .image-container {
+        width: 100%;
+    }
+    
+    .terrorism-image {
+        max-height: 250px;
+        margin: 0 auto;
     }
 } 
