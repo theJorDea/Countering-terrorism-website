@@ -6,6 +6,38 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check if we're on the history page
     const isHistoryPage = document.body.getAttribute('data-page') === 'history';
     
+    // Управление плавающей кнопкой службы спасения
+    const floatingEmergency = document.querySelector('.floating-emergency');
+    
+    // Показываем кнопку только на главной странице (index.html или /)
+    if (floatingEmergency) {
+        const isHomePage = 
+            location.pathname === '/' || 
+            location.pathname === '/index.html' || 
+            location.pathname.endsWith('/index.html') ||
+            location.pathname === '';
+        
+        if (!isHomePage) {
+            floatingEmergency.style.display = 'none';
+        } else {
+            // Сразу показываем кнопку в развернутом виде при загрузке страницы
+            const label = floatingEmergency.querySelector('.label');
+            floatingEmergency.classList.add('expanded');
+            
+            // Через 2 секунды сворачиваем кнопку до иконки и числа 112 с анимацией
+            setTimeout(function() {
+                // Применяем анимацию скрытия текста
+                label.style.animation = 'collapseText 0.5s ease forwards';
+                
+                // По завершении анимации добавляем класс semi-collapsed
+                setTimeout(() => {
+                    floatingEmergency.classList.remove('expanded');
+                    floatingEmergency.classList.add('semi-collapsed');
+                }, 500);
+            }, 2000);
+        }
+    }
+    
     // Ensure hero sections are always visible without animations
     const heroElements = document.querySelectorAll('.hero, .hero h2, .hero p');
     heroElements.forEach(el => {
@@ -75,14 +107,23 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Mobile menu toggle functionality
     const menuToggle = document.querySelector('.menu-toggle');
-    const nav = document.querySelector('nav ul');
+    const nav = document.querySelector('nav');
     
     if (menuToggle) {
         menuToggle.addEventListener('click', function() {
             nav.classList.toggle('show');
-            menuToggle.classList.toggle('active');
         });
     }
+    
+    // Закрытие меню при клике на пункт меню
+    const menuItems = document.querySelectorAll('nav ul li a');
+    menuItems.forEach(item => {
+        item.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                nav.classList.remove('show');
+            }
+        });
+    });
     
     // Form submission handling
     const contactForm = document.querySelector('.contact-form');

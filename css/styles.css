@@ -206,9 +206,9 @@ header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-right: 20px;
     max-width: 1200px;
     margin: 0 auto;
+    position: relative;
 }
 
 .header-right {
@@ -218,14 +218,7 @@ header .container {
 }
 
 .emergency-number {
-    position: absolute;
-    top: 0;
-    right: 20px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
+    display: none;
 }
 
 .copy-number {
@@ -954,19 +947,65 @@ body[data-page="history"] .history-image:hover {
 }
 
 /* Responsive Styles */
+@media (max-width: 1200px) {
+    header .container {
+        padding-right: 150px;
+    }
+    
+    .logo-container h1 {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 992px) {
+    header .container {
+        padding-right: 140px;
+    }
+    
+    .logo-container h1 {
+        font-size: 1.4rem;
+    }
+    
+    nav ul li {
+        margin-left: 15px;
+    }
+}
+
 @media (max-width: 768px) {
     header .container {
-        flex-direction: column;
-        text-align: center;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 0;
     }
     
     nav {
+        display: none;
+    }
+    
+    .menu-toggle {
+        display: block;
+        margin-right: 100px;
+    }
+    
+    nav.show {
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 0;
         width: 100%;
+        background-color: var(--header-bg);
+        padding: 20px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     }
     
     nav ul {
-        margin-top: 15px;
-        justify-content: center;
+        flex-direction: column;
+        margin-top: 0;
+    }
+    
+    nav ul li {
+        margin: 10px 0;
+        text-align: center;
     }
     
     .flex-container {
@@ -992,83 +1031,106 @@ body[data-page="history"] .history-image:hover {
         margin-bottom: 10px;
     }
     
-    .menu-toggle {
-        display: block;
-        position: absolute;
-        top: 20px;
-        right: 20px;
+    .floating-emergency-button {
+        padding: 8px 12px;
     }
     
-    nav ul {
-        flex-direction: column;
-        text-align: center;
+    .floating-emergency-button .label {
+        font-size: 0.8rem;
     }
     
-    nav ul li {
-        margin: 5px 0;
-    }
-    
-    .contact-container {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .logo-container-right {
-        margin-left: 0;
-        margin-top: 30px;
-        width: 100%;
-        max-width: 220px;
-        margin: 30px auto 0;
-    }
-    
-    .contact-image {
-        max-height: 180px;
-    }
-    
-    .contact-info-card {
-        margin-right: 0;
-        padding: 25px;
-        width: 100%;
-    }
-    
-    .contact-info-card p {
-        flex-direction: column;
-        align-items: flex-start;
-        margin-bottom: 20px;
-    }
-    
-    .contact-label {
-        margin-bottom: 5px;
-        min-width: auto;
+    .floating-emergency-button .number {
         font-size: 1rem;
+    }
+    
+    .floating-emergency.semi-collapsed .floating-emergency-button {
+        padding: 6px 14px;
+    }
+    
+    .floating-emergency.semi-collapsed .number {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .emergency-number {
+        right: 15px;
+    }
+    
+    .copy-number {
+        padding: 5px 8px;
+        font-size: 0.9em;
+    }
+    
+    .logo-container h1 {
+        font-size: 1.2rem;
+    }
+    
+    .logo-image {
+        height: 32px;
+        margin-right: 10px;
     }
 }
 
 @media (max-width: 480px) {
     .hero h2 {
-        font-size: 1.8rem;
+        font-size: 2em;
     }
     
     .hero p {
-        font-size: 1rem;
+        font-size: 1em;
     }
     
     .info-section {
-        padding: 20px;
+        padding: 15px;
     }
     
     .emergency-item {
-        min-width: 100%;
-        flex-basis: 100%;
-        margin-bottom: 15px;
+        padding: 10px;
+        margin-bottom: 10px;
     }
     
     .emergency-numbers {
-        gap: 15px;
+        flex-direction: column;
     }
     
     .emergency-item h3 {
-        font-size: 1.8rem;
+        font-size: 1.1em;
+    }
+    
+    .emergency-number {
+        right: 10px;
+    }
+    
+    .copy-number {
+        padding: 4px 8px;
+        font-size: 0.8em;
+    }
+    
+    .emergency-number .label {
+        display: none;
+    }
+    
+    .menu-toggle {
+        margin-right: 70px;
+    }
+    
+    .floating-emergency {
+        bottom: 15px;
+        left: 15px;
+    }
+    
+    .floating-emergency.collapsed .floating-emergency-button {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .floating-emergency.semi-collapsed .floating-emergency-button {
+        padding: 5px 12px;
+    }
+    
+    .floating-emergency.semi-collapsed .number {
+        font-size: 0.9rem;
     }
 }
 
@@ -1552,4 +1614,157 @@ input[type="checkbox"] {
 section, div, nav, footer {
     max-width: 100%;
     box-sizing: border-box;
+}
+
+/* Плавающая кнопка экстренной службы */
+.floating-emergency {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.floating-emergency-button {
+    background-color: rgb(38, 21, 23);
+    border-radius: 25px;
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    white-space: nowrap;
+    min-width: 50px;
+    text-align: center;
+}
+
+.floating-emergency-button .label {
+    font-size: 0.9rem;
+    transition: all 0.5s ease;
+    white-space: nowrap;
+    opacity: 1;
+    max-width: 200px;
+    transform: translateX(0);
+    color: white;
+    font-weight: 500;
+    margin-right: 12px;
+}
+
+.floating-emergency-button .number {
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.floating-emergency-button .number::before {
+    content: "\f095";  /* Font Awesome phone icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 6px;
+    font-size: 0.9em;
+    color: white;
+}
+
+/* Полуcвернутая кнопка (только 112 и значок телефона) */
+.floating-emergency.semi-collapsed .floating-emergency-button .label {
+    opacity: 0;
+    max-width: 0;
+    margin-right: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.5s ease, max-width 0.5s ease, transform 0.5s ease, margin-right 0.5s ease;
+}
+
+/* Hover эффект для раскрытия кнопки */
+.floating-emergency.semi-collapsed:hover .floating-emergency-button .label {
+    opacity: 1;
+    max-width: 200px;
+    transform: translateX(0);
+    margin-right: 12px;
+    transition: opacity 0.5s ease, max-width 0.5s ease, transform 0.5s ease, margin-right 0.5s ease;
+}
+
+/* Анимация для скрытия текста */
+@keyframes collapseText {
+    0% {
+        opacity: 1;
+        max-width: 200px;
+        transform: translateX(0);
+        margin-right: 12px;
+    }
+    100% {
+        opacity: 0;
+        max-width: 0;
+        transform: translateX(-20px);
+        margin-right: 0;
+    }
+}
+
+/* Анимация для показа текста при наведении */
+@keyframes expandText {
+    0% {
+        opacity: 0;
+        max-width: 0;
+        transform: translateX(-20px);
+        margin-right: 0;
+    }
+    100% {
+        opacity: 1;
+        max-width: 200px;
+        transform: translateX(0);
+        margin-right: 12px;
+    }
+}
+
+/* Анимация появления */
+.floating-emergency {
+    animation: slideInUp 0.5s ease-out forwards;
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Медиа-запросы для плавающей кнопки */
+@media (max-width: 768px) {
+    .floating-emergency-button {
+        padding: 8px 12px;
+    }
+    
+    .floating-emergency-button .label {
+        font-size: 0.8rem;
+    }
+    
+    .floating-emergency-button .number {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .floating-emergency {
+        bottom: 15px;
+        left: 15px;
+    }
+    
+    .floating-emergency-button {
+        padding: 6px 10px;
+    }
+    
+    .floating-emergency-button .number {
+        font-size: 0.9rem;
+    }
 } 

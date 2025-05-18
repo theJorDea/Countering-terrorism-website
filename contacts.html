@@ -11,12 +11,6 @@
 </head>
 <body>
     <header>
-        <div class="emergency-number">
-            <button class="copy-number" onclick="copyNumber('112')">
-                <span class="label">Единая служба спасения</span>
-                <span class="number">112</span>
-            </button>
-        </div>
         <div class="container">
             <div class="logo-container">
                 <a href="index.html" class="logo-link">
@@ -25,7 +19,13 @@
                 </a>
             </div>
             <div class="header-right">
-                <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+                <button class="menu-toggle" aria-label="Открыть меню" aria-expanded="false" aria-controls="main-navigation">
+                    <span class="menu-toggle-icon">
+                        <span class="menu-toggle-line"></span>
+                        <span class="menu-toggle-line"></span>
+                        <span class="menu-toggle-line"></span>
+                    </span>
+                </button>
                 <nav>
                     <ul>
                         <li><a href="index.html">Главная</a></li>
@@ -57,7 +57,7 @@
                 <div class="text-content">
                     <div class="contact-info-card">
                         <p><span class="contact-label">Адрес:</span> г. Москва, ул. Остоженка, д. 53/2, стр. 1, Дипломатическая академия МИД РФ</p>
-                        <p><span class="contact-label">Телефон:</span> 8 (495) 224-22-22</p>
+                        <p><span class="contact-label">Телеграмм:</span> <a href="https://t.me/terrorizmunet" target="_blank" style="text-decoration: none; color: inherit;">@terrorizmunet</a></p>
                         <p><span class="contact-label">Email:</span> info@antiterror.ru</p>
                         <p><span class="contact-label">Время работы:</span> Пн-Пт с 9:00 до 18:00</p>
                     </div>
@@ -135,5 +135,13 @@
     <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
     
     <div id="copy-tooltip" class="copy-tooltip">Номер 112 скопирован в буфер обмена!</div>
+    
+    <!-- Кнопка экстренной службы в правом нижнем углу -->
+    <div class="floating-emergency">
+        <button class="copy-number floating-emergency-button" onclick="copyNumber('112')">
+            <span class="label">Единая служба спасения</span>
+            <span class="number">112</span>
+        </button>
+    </div>
 </body>
 </html> 
