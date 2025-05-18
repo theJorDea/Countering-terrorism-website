@@ -3,6 +3,17 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.style.opacity = '1';
     document.documentElement.style.opacity = '1';
     
+    // Check if we're on the history page
+    const isHistoryPage = document.body.getAttribute('data-page') === 'history';
+    
+    // Ensure hero sections are always visible without animations
+    const heroElements = document.querySelectorAll('.hero, .hero h2, .hero p');
+    heroElements.forEach(el => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.style.animation = 'none';
+    });
+    
     // Гарантируем, что header всегда виден при загрузке страницы
     const header = document.querySelector('header');
     if (header) {
@@ -30,6 +41,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Переключение темы
     themeToggle.addEventListener('change', function() {
+        // Add animation class to body
+        document.body.classList.add('theme-transition');
+        
         if (this.checked) {
             document.documentElement.setAttribute('data-theme', 'dark');
             localStorage.setItem('theme', 'dark');
@@ -37,6 +51,11 @@ document.addEventListener('DOMContentLoaded', function() {
             document.documentElement.setAttribute('data-theme', 'light');
             localStorage.setItem('theme', 'light');
         }
+        
+        // Remove animation class after transition completes
+        setTimeout(() => {
+            document.body.classList.remove('theme-transition');
+        }, 600); // Slightly longer than the CSS transition time
     });
     
     // Компактная шапка при прокрутке
@@ -129,6 +148,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Анимация появления элементов при прокрутке
     const animateOnScroll = function() {
+        // Skip animations on history page
+        if (isHistoryPage) return;
+        
         const elements = document.querySelectorAll('.info-section, .text-content, .image-container');
         
         elements.forEach(element => {
@@ -158,16 +180,14 @@ document.addEventListener('DOMContentLoaded', function() {
             if (this.hostname === window.location.hostname) {
                 e.preventDefault();
                 
-                // Анимация исчезновения только содержимого страницы (main и footer), но не header
+                // Анимация исчезновения только содержимого страницы (main и footer), но не header и hero
                 const mainContent = document.querySelector('main');
                 const footerContent = document.querySelector('footer');
-                const heroContent = document.querySelector('.hero');
                 
                 if (mainContent) mainContent.style.opacity = '0';
                 if (footerContent) footerContent.style.opacity = '0';
-                if (heroContent) heroContent.style.opacity = '0';
                 
-                // Убедимся, что header остается видимым
+                // Убедимся, что header и hero остаются видимыми
                 if (header) {
                     header.style.opacity = '1';
                     header.style.visibility = 'visible';

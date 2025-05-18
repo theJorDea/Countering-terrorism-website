@@ -1,6 +1,29 @@
-# No-To-Terrorism-Website
+# No to Terrorism Website
 
-Информационный ресурс "Терроризму НЕТ", посвященный профилактике терроризма и экстремизма.
+A informational website aimed at providing resources and raising awareness about terrorism prevention.
+
+## Features
+
+- Information about recognizing signs of terrorism
+- Guidelines on what to do during terrorist threats
+- Educational resources about terrorism prevention
+- Emergency contact information
+- Light/Dark theme toggle
+
+## Technologies Used
+
+- HTML5
+- CSS3
+- JavaScript
+- Responsive design for all devices
+
+## Purpose
+
+This website serves as an educational resource to help people understand terrorism, recognize warning signs, and know what actions to take in threatening situations. The goal is to create a more informed public that can contribute to preventing terrorist acts.
+
+## Emergency Contact
+
+In case of emergency, call the unified emergency service: 112
 
 ## Описание проекта
 

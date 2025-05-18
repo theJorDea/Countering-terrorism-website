@@ -40,6 +40,8 @@
     --contact-info-card-bg: #ffffff;
     --contact-info-card-text: var(--text-color);
     --contact-label-color: #b71c1c;
+    --theme-transition-duration: 0.5s;
+    --theme-transition-timing: ease;
 }
 
 [data-theme="dark"] {
@@ -84,10 +86,24 @@
 }
 
 /* General Styles */
+html, body {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: background-color var(--theme-transition-duration) var(--theme-transition-timing),
+                color var(--theme-transition-duration) var(--theme-transition-timing),
+                border-color var(--theme-transition-duration) var(--theme-transition-timing),
+                box-shadow var(--theme-transition-duration) var(--theme-transition-timing);
 }
 
 body {
@@ -96,15 +112,23 @@ body {
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--bg-color);
-    transition: background-color 0.3s ease, color 0.3s ease;
-    animation: smoothFadeIn 0.5s ease-out forwards;
-    opacity: 0;
+    transition: background-color var(--theme-transition-duration) var(--theme-transition-timing), 
+                color var(--theme-transition-duration) var(--theme-transition-timing);
+    opacity: 1;
+    overflow-x: hidden;
+    overflow-y: visible;
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    position: relative;
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    width: auto;
+    overflow-x: hidden;
 }
 
 h1, h2, h3 {
@@ -143,7 +167,6 @@ header {
     z-index: 1000;
     transition: all 0.3s ease;
     opacity: 1 !important;
-    animation: none !important;
     visibility: visible !important;
 }
 
@@ -196,76 +219,65 @@ header .container {
 
 .emergency-number {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 0;
     right: 20px;
-    border-radius: 20px;
-    background-color: rgba(0, 0, 0, 0.3);
-    padding: 10px 20px;
-    text-align: center;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 100;
-    transition: all 0.3s ease;
-}
-
-header.compact .emergency-number {
-    padding: 8px 16px;
-    transform: translateY(-50%) scale(0.9);
-}
-
-@media (max-width: 1240px) {
-    .emergency-number {
-        right: 20px;
-    }
 }
 
 .copy-number {
-    color: var(--emergency-text);
-    text-decoration: none;
-    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    padding: 6px 12px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    background: none;
+    color: var(--emergency-text);
+    font-weight: bold;
     border: none;
     cursor: pointer;
-    padding: 0;
-    font-family: inherit;
-    transition: transform 0.2s;
+    transition: transform 0.2s, background-color 0.3s;
 }
 
 .copy-number:hover {
     transform: scale(1.05);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .copy-number:active {
     transform: scale(0.95);
 }
 
+.emergency-number .label {
+    font-size: 0.75rem;
+    opacity: 0.9;
+    margin-right: 8px;
+    white-space: nowrap;
+}
+
 .emergency-number .number {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    font-weight: bold;
     display: flex;
     align-items: center;
-    margin-top: 2px;
-    transition: all 0.3s ease;
 }
 
 .emergency-number .number::before {
-    content: "☎";
-    margin-right: 5px;
+    content: "\f095";  /* Font Awesome phone icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 6px;
+    font-size: 0.9em;
+}
+
+header.compact .copy-number {
+    padding: 4px 10px;
 }
 
 header.compact .emergency-number .number {
-    font-size: 1.1rem;
-}
-
-.emergency-number .label {
-    font-size: 0.7rem;
-    opacity: 0.9;
-    transition: all 0.3s ease;
-}
-
-header.compact .emergency-number .label {
-    font-size: 0.65rem;
+    font-size: 1rem;
 }
 
 header h1 {
@@ -324,18 +336,16 @@ nav ul li i {
     font-size: 16px;
 }
 
-/* Hero Section */
+/* Hero Section - No animations */
 .hero {
     background-color: var(--hero-bg);
     color: var(--hero-text);
-    padding: 80px 0;
+    padding: 60px 0 40px;
     text-align: center;
-    background-image: none;
-    background-size: cover;
-    background-position: center;
+    margin-bottom: 30px;
     position: relative;
     transition: background-color 0.3s ease, color 0.3s ease;
-    animation: smoothFadeIn 0.5s ease-out forwards;
+    opacity: 1;
 }
 
 .hero-text-container {
@@ -349,54 +359,48 @@ nav ul li i {
 .hero h2 {
     font-size: 2.5rem;
     margin-bottom: 20px;
-    color: var(--hero-text);
+    color: var(--text-color);
+    font-weight: 700;
     position: relative;
-    z-index: 2;
-    font-weight: bold;
-    animation: fadeIn 1s ease-out forwards;
-    animation-delay: 0.2s;
-    opacity: 0;
-    animation-fill-mode: forwards;
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
 }
 
 .hero p {
     font-size: 1.2rem;
     max-width: 800px;
-    margin: 0 auto;
+    margin: 0 auto 30px;
+    color: var(--text-color);
     position: relative;
-    z-index: 2;
-    color: var(--hero-text);
-    animation: fadeIn 1s ease-out forwards;
-    animation-delay: 0.4s;
-    opacity: 0;
-    animation-fill-mode: forwards;
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
 }
 
 .about-hero {
-    background-image: none;
-    background-color: var(--hero-bg);
+    margin-bottom: 50px;
+    opacity: 1;
 }
 
 /* Main Content */
 main {
     padding: 40px 0;
     animation: smoothFadeIn 0.5s ease-out forwards;
+    position: relative;
+    overflow: visible;
 }
 
 .info-section {
-    margin-bottom: 40px;
-    background-color: var(--info-section-bg);
+    background-color: var(--section-bg-red-tint);
+    border-radius: 10px;
     padding: 30px;
-    border-radius: 20px;
-    box-shadow: 
-        8px 8px 16px var(--neomorphic-shadow2),
-        -8px -8px 16px var(--neomorphic-shadow1);
-    transition: all 0.3s ease;
+    margin-bottom: 30px;
+    box-shadow: 0 3px 15px var(--section-shadow);
     backdrop-filter: blur(var(--section-backdrop-blur));
     -webkit-backdrop-filter: blur(var(--section-backdrop-blur));
-    border: none;
-    text-align: left;
-    animation: fadeIn 0.8s ease-out forwards;
+    transition: all 0.3s ease;
+    opacity: 1;
 }
 
 .info-section:hover {
@@ -484,8 +488,10 @@ main {
 
 .info-section.dark-red-bg .simple-list li::before {
     color: white;
-    content: "⚠";
-    font-size: 1.2em;
+    content: "\f071";  /* Font Awesome warning icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 1em;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
@@ -614,9 +620,12 @@ figcaption {
 }
 
 .danger-signs li:before {
-    content: "⚠️";
+    content: "\f071";  /* Font Awesome warning icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
     position: absolute;
     left: 0;
+    color: #e74c3c;
 }
 
 .contact-info {
@@ -757,45 +766,29 @@ footer strong {
     margin-top: 20px;
 }
 
-/* Анимация для карточек контактной информации */
-@keyframes contactCardAppear {
-    0% { transform: scale(0.95); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
 .emergency-item {
     background-color: var(--emergency-bg);
-    padding: 25px 20px;
-    border-radius: 15px;
-    text-align: center;
-    flex: 1;
-    min-width: 200px;
-    box-shadow: none;
-    transition: transform 0.3s, background-color 0.3s ease, color 0.3s ease;
-    border: none;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--emergency-bg-border);
+    margin-bottom: 20px;
     position: relative;
-    overflow: hidden;
-    margin: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    animation: contactCardAppear 0.5s ease-out forwards;
+    transform-origin: center;
+    transition: transform 0.3s, background-color 0.3s ease, color 0.3s ease;
+    opacity: 1;
 }
 
-.emergency-item:nth-child(1) { animation-delay: 0.1s; }
-.emergency-item:nth-child(2) { animation-delay: 0.2s; }
-.emergency-item:nth-child(3) { animation-delay: 0.3s; }
-.emergency-item:nth-child(4) { animation-delay: 0.4s; }
-
-.emergency-item:before {
-    content: none;
+.emergency-item:nth-child(1),
+.emergency-item:nth-child(2),
+.emergency-item:nth-child(3),
+.emergency-item:nth-child(4) {
+    opacity: 1;
 }
 
 .emergency-item:hover {
-    transform: translateY(-3px);
-    box-shadow: none;
-    animation: pulse 1s ease-in-out infinite;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .emergency-item h3 {
@@ -812,11 +805,12 @@ footer strong {
 }
 
 .emergency-item h3:before {
-    content: "☎";
-    font-size: 0.7em;
-    margin-right: 5px;
-    vertical-align: middle;
-    opacity: 0.8;
+    content: "\f095";  /* Font Awesome phone icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 8px;
+    font-size: 0.8em;
+    opacity: 0.9;
 }
 
 [data-theme="dark"] .emergency-item h3 {
@@ -831,34 +825,13 @@ footer strong {
     margin-top: 5px;
 }
 
-/* Анимация для копирования номера */
-@keyframes highlightPhone {
-    0% { color: var(--emergency-number-color); }
-    50% { color: #4CAF50; }
-    100% { color: var(--emergency-number-color); }
-}
-
-.copy-number:active .number {
-    animation: highlightPhone 0.8s ease-out;
-}
-
-/* Анимация для фото в разделе "О нас" */
-@keyframes imageFade {
-    from { opacity: 0.7; filter: grayscale(100%); }
-    to { opacity: 1; filter: grayscale(0%); }
-}
-
-.image-container img:hover {
-    animation: imageFade 0.5s forwards;
-}
-
 /* Contact Hero */
 .contact-hero {
     background-image: none;
     background-color: var(--hero-bg);
 }
 
-/* Тема переключатель - ультра-минималистичный стиль */
+/* Theme Toggle - Sun/Moon */
 .theme-toggle {
     margin-right: 15px;
     position: relative;
@@ -868,27 +841,27 @@ footer strong {
 
 .theme-toggle-label {
     display: inline-block;
-    height: 16px;
-    width: 32px;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 8px;
+    height: 28px;
+    width: 28px;
+    background-color: transparent;
+    border-radius: 50%;
     position: relative;
     cursor: pointer;
-    transition: 0.3s;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    overflow: hidden;
 }
 
-.theme-toggle-label:after {
-    content: "";
+.theme-toggle-label:before {
+    content: "\f185"; /* Font Awesome sun icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    color: white;
+    font-size: 20px;
     position: absolute;
-    height: 12px;
-    width: 12px;
-    border-radius: 50%;
-    top: 2px;
-    left: 2px;
-    background-color: white;
-    transition: 0.3s;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all var(--theme-transition-duration) var(--theme-transition-timing);
 }
 
 .theme-toggle-checkbox {
@@ -896,13 +869,14 @@ footer strong {
     position: absolute;
 }
 
-.theme-toggle-checkbox:checked + .theme-toggle-label {
-    background-color: rgba(0, 0, 0, 0.5);
+.theme-toggle-checkbox:checked + .theme-toggle-label:before {
+    content: "\f186"; /* Font Awesome moon icon */
+    font-size: 18px;
+    transform: translate(-50%, -50%) rotate(360deg);
 }
 
-.theme-toggle-checkbox:checked + .theme-toggle-label:after {
-    left: calc(100% - 14px);
-    background-color: #eee;
+.theme-toggle-label:hover {
+    transform: scale(1.1);
 }
 
 /* Mobile Menu Toggle */
@@ -951,6 +925,32 @@ nav ul.show {
     margin-bottom: 20px;
     color: var(--terror-case-title);
     font-weight: 600;
+}
+
+/* Special styles for history page - no animations */
+body[data-page="history"] .hero h2,
+body[data-page="history"] .hero p {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+body[data-page="history"] .info-section,
+body[data-page="history"] .info-section .text-content,
+body[data-page="history"] .info-section .image-container,
+body[data-page="history"] .terror-case {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* No hover animations on history page */
+body[data-page="history"] .info-section:hover,
+body[data-page="history"] .history-image:hover {
+    transform: none !important;
+    animation: none !important;
+    box-shadow: 0 3px 15px var(--section-shadow);
 }
 
 /* Responsive Styles */
@@ -1085,13 +1085,16 @@ nav ul.show {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 20px;
     text-decoration: none;
     opacity: 0;
     visibility: hidden;
     transition: 0.3s;
     box-shadow: 0 2px 10px var(--section-shadow);
     z-index: 1000;
+}
+
+.back-to-top i {
+    font-size: 18px;
 }
 
 .back-to-top.show {
@@ -1172,12 +1175,14 @@ header.compact h1 {
 }
 
 .simple-list li::before {
-    content: "•";
+    content: "\f111";  /* Font Awesome circle icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
     position: absolute;
     left: 0;
     color: var(--text-color);
-    font-size: 1.2em;
-    font-weight: bold;
+    font-size: 0.5em;
+    top: 0.5em;
 }
 
 [data-theme="dark"] .simple-list li::before {
@@ -1191,9 +1196,11 @@ header.compact h1 {
 }
 
 .info-section.dark-red-bg .simple-list li::before {
-    color: var(--dark-red-section-text);
-    content: "⚠";
-    font-size: 1.2em;
+    color: white;
+    content: "\f071";  /* Font Awesome warning icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 1em;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
@@ -1289,22 +1296,22 @@ header.compact h1 {
     position: relative;
     margin-bottom: 30px;
     padding-bottom: 10px;
-    border-bottom: 2px solid #b71c1c;
+    border-bottom: none;
 }
 
 .terrorism-heading::after {
     background-color: #b71c1c;
     content: "";
     position: absolute;
-    bottom: -2px;
+    bottom: 0;
     left: 0;
     height: 2px;
-    width: 50px;
+    width: 100%;
 }
 
 /* Terrorism definition specific styling */
 .terrorism-definition {
-    color: white;
+    color: #000000;
     font-size: 1.05rem;
     line-height: 1.6;
     text-align: left;
@@ -1322,24 +1329,21 @@ header.compact h1 {
     margin-bottom: 0;
 }
 
-/* Ensure proper line wrapping for all text content */
-.text-content {
-    flex: 3;
-    min-width: 300px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    hyphens: auto;
-}
-
-/* Ensuring image is properly displayed in dark background */
-.dark-bg .terrorism-image {
-    border: 4px solid white;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
-
 /* Dark background for info sections */
 .dark-bg {
     background-color: #231f20;
+    color: white;
+}
+
+/* Override for terrorism definition in dark background */
+.dark-bg .terrorism-definition,
+.dark-bg .terrorism-definition p {
+    color: #000000;
+}
+
+/* Make terrorism definition text white in dark theme */
+[data-theme="dark"] .dark-bg .terrorism-definition,
+[data-theme="dark"] .dark-bg .terrorism-definition p {
     color: white;
 }
 
@@ -1348,11 +1352,17 @@ header.compact h1 {
     position: relative;
     margin-bottom: 30px;
     padding-bottom: 10px;
-    border-bottom: 2px solid #b71c1c;
+    border-bottom: none;
 }
 
 .contact-heading::after {
     background-color: #b71c1c;
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
 }
 
 .contact-info-card p {
@@ -1423,17 +1433,15 @@ header.compact h1 {
 }
 
 .hero h2 {
-    animation: fadeIn 1s ease-out forwards;
-    animation-delay: 0.2s;
-    opacity: 0;
-    animation-fill-mode: forwards;
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
 }
 
 .hero p {
-    animation: fadeIn 1s ease-out forwards;
-    animation-delay: 0.4s;
-    opacity: 0;
-    animation-fill-mode: forwards;
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
 }
 
 .logo-image {
@@ -1449,9 +1457,9 @@ header.compact h1 {
     animation: fadeIn 0.8s ease-out forwards;
 }
 
-/* Плавное появление страницы, за исключением header */
-main, footer, .hero {
-    animation: smoothFadeIn 0.5s ease-out forwards;
+/* Плавное появление страницы, за исключением header и hero */
+main, footer {
+    opacity: 1;
 }
 
 /* Header не анимируется */
@@ -1469,8 +1477,61 @@ header nav ul li,
 header nav ul li a,
 header .emergency-number,
 header .container {
-    animation: none !important;
     opacity: 1 !important;
     visibility: visible !important;
     transform: none;
+}
+
+/* Hide system checkboxes that might appear */
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+}
+
+/* Override for theme toggle checkbox to ensure it works */
+.theme-toggle-checkbox {
+    opacity: 0;
+    position: absolute;
+}
+
+.emergency-number .number::before {
+    content: "\f095";  /* Font Awesome phone icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 6px;
+    font-size: 0.9em;
+}
+
+/* Theme transition effects */
+.theme-transition {
+    transition: background-color var(--theme-transition-duration) var(--theme-transition-timing) !important;
+}
+
+.theme-transition * {
+    transition: background-color var(--theme-transition-duration) var(--theme-transition-timing),
+                color var(--theme-transition-duration) var(--theme-transition-timing),
+                border-color var(--theme-transition-duration) var(--theme-transition-timing) !important;
+}
+
+/* Ensure proper line wrapping for all text content */
+.text-content {
+    flex: 3;
+    min-width: 300px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
+/* Ensuring image is properly displayed in dark background */
+.dark-bg .terrorism-image {
+    border: 4px solid white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Ensure all sections stay within bounds */
+section, div, nav, footer {
+    max-width: 100%;
+    box-sizing: border-box;
 } 
