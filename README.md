@@ -1,53 +1,53 @@
 # Countering-terrorism-website
 
-Информационный ресурс, посвященный профилактике терроризма и экстремизма.
+An informational resource dedicated to terrorism prevention and counteraction.
 
-## Описание проекта
+## Project Description
 
-Этот проект представляет собой простой информационный веб-сайт, содержащий материалы о противодействии терроризму. Сайт включает в себя следующие разделы:
-- Главная страница с общей информацией
-- Страница "О нас" с описанием миссии и направлениями деятельности
-- Информация о признаках подготовки террористического акта
-- Рекомендации по безопасности
+This project is a simple informational website containing materials about countering terrorism. The site includes the following sections:
+- Main page with general information
+- "About Us" page with the mission description and areas of activity
+- Information about signs of terrorist attack preparation
+- Safety recommendations
 
-## Структура проекта
+## Project Structure
 
 ```
-├── index.html          # Главная страница
-├── about.html          # Страница "О нас"
-├── styles.css          # Стили для всего сайта
-├── .gitignore          # Исключения для Git
-├── images/             # Директория с изображениями
-│   └── generate.html   # Генератор плейсхолдеров для изображений
-└── README.md           # Документация проекта
+├── index.html          # Main page
+├── about.html          # About Us page
+├── styles.css          # Styles for the entire site
+├── .gitignore          # Git exclusions
+├── images/             # Images directory
+│   └── generate.html   # Placeholder generator for images
+└── README.md           # Project documentation
 ```
 
-## Технологии
+## Technologies
 
 - HTML5
 - CSS3
-- Встроенные SVG-изображения
+- Embedded SVG images
 
-## Установка и запуск
+## Installation and Launch
 
-1. Клонируйте репозиторий:
+1. Clone the repository:
 
 ```
 git clone https://github.com/theJorDea/Countering-terrorism-website.git
 ```
 
-2. Откройте файл index.html в браузере.
+2. Open the index.html file in your browser.
 
-## Особенности
+## Features
 
-- Адаптивный дизайн
-- Вся необходимая информация доступна сразу на сайте
-- Оптимизированные изображения через SVG
-- Современный дизайн с использованием градиентов
+- Responsive design
+- All necessary information is immediately available on the site
+- Optimized images via SVG
+- Modern design using gradients
 
-## Настройка Git для Windows при работе с кириллицей
+## Git Configuration for Cyrillic in Windows
 
-Если у вас возникают проблемы с отображением кириллических символов в git log или коммитах, выполните следующие команды:
+If you encounter problems displaying Cyrillic characters in git log or commits, run the following commands:
 
 ```
 git config --global core.quotepath off
@@ -56,7 +56,7 @@ git config --global i18n.logoutputencoding utf-8
 git config --global core.precomposeunicode true
 ```
 
-Для PowerShell также может потребоваться настройка кодировки консоли:
+For PowerShell, console encoding configuration may also be required:
 
 ```
 $OutputEncoding = [System.Text.Encoding]::UTF8
@@ -64,36 +64,36 @@ $OutputEncoding = [System.Text.Encoding]::UTF8
 chcp 65001
 ```
 
-Обратите внимание, что при работе с кириллицей в Windows могут возникать проблемы с отображением первой буквы в сообщениях коммитов. Это связано с особенностями работы PowerShell и Git в Windows.
+Note that when working with Cyrillic in Windows, there may be issues with displaying the first letter in commit messages. This is due to how PowerShell and Git handle encoding in Windows. It's recommended to use English for commit messages.
 
-## Лицензия
+## License
 
-Проект распространяется под открытой лицензией. Вы можете свободно использовать, модифицировать и распространять его.
+The project is distributed under an open license. You are free to use, modify, and distribute it.
 
-## Контакты
+## Contact
 
-Если у вас есть вопросы или предложения по улучшению сайта, свяжитесь с нами.
+If you have questions or suggestions for improving the site, please contact us.
 
-## Необходимые изображения
+## Required Images
 
-Для полноценной работы сайта необходимо скачать следующие изображения и поместить их в папку `images/`:
+For the full functionality of the site, you need to download the following images and place them in the `images/` folder:
 
-1. `hero-bg.jpg` - фоновое изображение для главной страницы
-2. `about-hero.jpg` - фоновое изображение для страницы "О нас"
-3. `terrorism-prevention.jpg` - изображение для раздела "Что такое терроризм?"
-4. `safety.jpg` - изображение для раздела "Что делать при угрозе"
-5. `mission.jpg` - изображение для раздела "Наша миссия"
-6. `activities.jpg` - изображение для раздела "Направления деятельности"
+1. `hero-bg.jpg` - background image for the main page
+2. `about-hero.jpg` - background image for the "About Us" page
+3. `terrorism-prevention.jpg` - image for the "What is terrorism?" section
+4. `safety.jpg` - image for the "What to do in case of a threat" section
+5. `mission.jpg` - image for the "Our Mission" section
+6. `activities.jpg` - image for the "Areas of Activity" section
 
-## Источники изображений
+## Image Sources
 
-Вы можете использовать бесплатные изображения с следующих сайтов:
+You can use free images from the following websites:
 - [Unsplash](https://unsplash.com/)
 - [Pexels](https://www.pexels.com/)
 - [Pixabay](https://pixabay.com/)
 
-## Примечание
+## Note
 
-Вместо загрузки изображений можно также использовать плейсхолдеры, например:
-- https://placehold.co/600x400?text=Безопасность
-- https://placehold.co/800x400?text=Профилактика+терроризма
+Instead of downloading images, you can also use placeholders, for example:
+- https://placehold.co/600x400?text=Safety
+- https://placehold.co/800x400?text=Terrorism+Prevention
