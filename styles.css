@@ -20,7 +20,7 @@ body {
 
 h1, h2, h3 {
     margin-bottom: 15px;
-    color: #2c3e50;
+    color: #ffffff;
 }
 
 p {
@@ -83,10 +83,10 @@ nav ul li a.active {
 /* Hero Section */
 .hero {
     background-color: #3498db;
-    color: white;
+    color: black;
     padding: 80px 0;
     text-align: center;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), linear-gradient(to right, #3498db, #2980b9);
+    background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), linear-gradient(to right, #3498db, #2980b9);
     background-size: cover;
     background-position: center;
     position: relative;
@@ -95,9 +95,10 @@ nav ul li a.active {
 .hero h2 {
     font-size: 2.5rem;
     margin-bottom: 20px;
-    color: white;
+    color: black;
     position: relative;
     z-index: 2;
+    font-weight: bold;
 }
 
 .hero p {
@@ -106,10 +107,11 @@ nav ul li a.active {
     margin: 0 auto;
     position: relative;
     z-index: 2;
+    color: black;
 }
 
 .about-hero {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), linear-gradient(to right, #2c3e50, #1a252f);
+    background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), linear-gradient(to right, #2c3e50, #1a252f);
 }
 
 /* Main Content */
