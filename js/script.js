@@ -154,6 +154,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 const currentPath = window.location.pathname;
                 const href = this.getAttribute('href');
                 
+                // Сохраним текущую позицию прокрутки для всех типов ссылок
+                const savedScrollPosition = window.scrollY;
+                
                 // If link points to current page or is a hash link, prevent navigation
                 if ((href.startsWith('#')) || 
                     (currentPath.endsWith(href)) || 
@@ -170,8 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             menuToggle.setAttribute('aria-expanded', 'false');
                             document.body.classList.remove('no-scroll');
                             
-                            // Restore scroll behavior
-                            const scrollY = document.body.style.top;
+                            // Не сбрасываем позицию прокрутки при закрытии меню
                             document.body.style.top = '';
                             
                             // Scroll to element
@@ -184,6 +186,24 @@ document.addEventListener('DOMContentLoaded', function() {
                         return;
                     }
                     
+                    // Для обычных ссылок на текущую страницу - закрываем меню и не скроллим
+                    if (href !== '#') {
+                        e.preventDefault();
+                        
+                        // Close menu but maintain scroll position
+                        nav.classList.remove('show');
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                        document.body.classList.remove('no-scroll');
+                        document.body.style.top = '';
+                        
+                        // Восстанавливаем текущую позицию прокрутки
+                        setTimeout(() => {
+                            window.scrollTo(0, savedScrollPosition);
+                        }, 10);
+                        
+                        return;
+                    }
+                    
                     // For current page links, just prevent default
                     e.preventDefault();
                     return;
@@ -193,6 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 nav.classList.remove('show');
                 menuToggle.setAttribute('aria-expanded', 'false');
                 document.body.classList.remove('no-scroll');
+                document.body.style.top = '';
             }
         });
     });
@@ -203,9 +224,20 @@ document.addEventListener('DOMContentLoaded', function() {
         if (nav.classList.contains('show') && 
             !nav.contains(e.target) && 
             !menuToggle.contains(e.target)) {
+            
+            // Сохраняем текущую позицию прокрутки
+            const savedScrollPosition = window.scrollY;
+            
+            // Закрываем меню
             nav.classList.remove('show');
             menuToggle.setAttribute('aria-expanded', 'false');
             document.body.classList.remove('no-scroll');
+            document.body.style.top = '';
+            
+            // Восстанавливаем позицию прокрутки
+            setTimeout(() => {
+                window.scrollTo(0, savedScrollPosition);
+            }, 10);
         }
     });
     
