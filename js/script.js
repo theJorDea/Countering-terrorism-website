@@ -110,31 +110,103 @@ document.addEventListener('DOMContentLoaded', function() {
     const nav = document.querySelector('nav');
     
     if (menuToggle) {
-        menuToggle.addEventListener('click', function() {
-            const isExpanded = this.getAttribute('aria-expanded') === 'true' || false;
+        menuToggle.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent event bubbling
+            e.preventDefault(); // Prevent any default action
+            
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
             this.setAttribute('aria-expanded', !isExpanded);
             
             // Toggle the menu visibility
-            nav.classList.toggle('show');
-            
-            if (nav.classList.contains('show')) {
-                document.body.classList.add('no-scroll'); // Use CSS class to prevent scrolling
+            if (!isExpanded) {
+                // Opening menu
+                nav.classList.add('show');
+                document.body.classList.add('no-scroll');
+                
+                // Make menu items immediately visible without animation
+                const menuItems = nav.querySelectorAll('ul li');
+                menuItems.forEach(item => {
+                    item.style.opacity = 1;
+                    item.style.transform = 'translateY(0)';
+                });
+                
+                // Store current scroll position
+                document.body.style.top = `-${window.scrollY}px`;
             } else {
-                document.body.classList.remove('no-scroll'); // Remove class to allow scrolling
+                // Closing menu
+                nav.classList.remove('show');
+                document.body.classList.remove('no-scroll');
+                
+                // Restore scroll position
+                const scrollY = document.body.style.top;
+                document.body.style.top = '';
+                window.scrollTo(0, parseInt(scrollY || '0') * -1);
             }
         });
     }
     
-    // Закрытие меню при клике на пункт меню
+    // Handle menu item clicks - only close for different pages
     const menuItems = document.querySelectorAll('nav ul li a');
     menuItems.forEach(item => {
-        item.addEventListener('click', () => {
+        item.addEventListener('click', function(e) {
             if (window.innerWidth <= 768) {
+                // Get current page and link target
+                const currentPath = window.location.pathname;
+                const href = this.getAttribute('href');
+                
+                // If link points to current page or is a hash link, prevent navigation
+                if ((href.startsWith('#')) || 
+                    (currentPath.endsWith(href)) || 
+                    (currentPath.endsWith('/') && href === 'index.html') ||
+                    (currentPath === '/' && href === 'index.html')) {
+                    
+                    // For hash links, still allow smooth scrolling but keep menu open
+                    if (href.startsWith('#') && href !== '#') {
+                        e.preventDefault();
+                        const targetElement = document.querySelector(href);
+                        if (targetElement) {
+                            // Close menu before scrolling
+                            nav.classList.remove('show');
+                            menuToggle.setAttribute('aria-expanded', 'false');
+                            document.body.classList.remove('no-scroll');
+                            
+                            // Restore scroll behavior
+                            const scrollY = document.body.style.top;
+                            document.body.style.top = '';
+                            
+                            // Scroll to element
+                            setTimeout(() => {
+                                targetElement.scrollIntoView({
+                                    behavior: 'smooth'
+                                });
+                            }, 100);
+                        }
+                        return;
+                    }
+                    
+                    // For current page links, just prevent default
+                    e.preventDefault();
+                    return;
+                }
+                
+                // For other pages, close menu before navigation
                 nav.classList.remove('show');
                 menuToggle.setAttribute('aria-expanded', 'false');
-                document.body.classList.remove('no-scroll'); // Use CSS class
+                document.body.classList.remove('no-scroll');
             }
         });
+    });
+    
+    // Also close menu when clicking outside of it
+    document.addEventListener('click', function(e) {
+        // If menu is open and click is outside of nav and not on menu toggle
+        if (nav.classList.contains('show') && 
+            !nav.contains(e.target) && 
+            !menuToggle.contains(e.target)) {
+            nav.classList.remove('show');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            document.body.classList.remove('no-scroll');
+        }
     });
     
     // Form submission handling
@@ -225,12 +297,23 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', animateOnScroll);
     window.addEventListener('load', animateOnScroll);
     
-    // Плавный переход между страницами
+    // Плавный переход между страницами - не выполнять для текущей страницы
     const pageLinks = document.querySelectorAll('nav a:not([href^="#"])');
     pageLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             // Только для внутренних ссылок
             if (this.hostname === window.location.hostname) {
+                const currentPath = window.location.pathname;
+                const href = this.getAttribute('href');
+                
+                // If it points to the current page, prevent default navigation
+                if (currentPath.endsWith(href) || 
+                    (currentPath.endsWith('/') && href === 'index.html') ||
+                    (currentPath === '/' && href === 'index.html')) {
+                    e.preventDefault();
+                    return;
+                }
+                
                 e.preventDefault();
                 
                 // Анимация исчезновения только содержимого страницы (main и footer), но не header и hero
