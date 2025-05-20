@@ -123,6 +123,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 nav.classList.add('show');
                 document.body.classList.add('no-scroll');
                 
+                // Прокручиваем страницу наверх при открытии меню
+                /* window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                }); */
+                
                 // Make menu items immediately visible without animation
                 const menuItems = nav.querySelectorAll('ul li');
                 menuItems.forEach(item => {
