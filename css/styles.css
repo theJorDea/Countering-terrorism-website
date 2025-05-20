@@ -116,7 +116,7 @@ body {
                 color var(--theme-transition-duration) var(--theme-transition-timing);
     opacity: 1;
     overflow-x: hidden;
-    overflow-y: visible;
+    overflow-y: auto;
     width: 100%;
     height: auto;
     min-height: 100%;
@@ -939,19 +939,17 @@ footer strong {
 
 /* Mobile nav menu when shown - with theme adaptations */
 nav.show {
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
+    display: block;
+    height: auto;
+    min-height: calc(100vh - 65px);
+    overflow-y: auto;
     position: fixed;
-    top: 65px;
     left: 0;
     right: 0;
     bottom: 0;
     width: 100%;
-    padding: 20px;
-    box-shadow: 0 5px 10px var(--section-shadow);
-    z-index: 99;
-    transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+    background-color: rgba(158, 1, 1, 0.97);
+    z-index: 1010; /* Ensure it's above header (1000) */
 }
 
 /* Light theme menu styling - Fully transparent with blur */
@@ -1089,6 +1087,15 @@ body[data-theme="dark"] nav.show .theme-toggle-label:before {
     
     nav {
         display: none;
+        position: fixed; 
+        top: 65px;       
+        left: 0;
+        right: 0;
+        width: 100%;
+        background-color: var(--header-bg);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        z-index: 1005;   
+        overflow-y: auto;
     }
     
     .menu-toggle {
@@ -1099,7 +1106,7 @@ body[data-theme="dark"] nav.show .theme-toggle-label:before {
     nav.show {
         height: auto;
         min-height: calc(100vh - 65px);
-        overflow: visible;
+        overflow-y: auto;
     }
     
     nav.show ul {
@@ -2065,4 +2072,31 @@ body[data-theme="dark"] nav.show .theme-toggle .theme-toggle-label:before {
 
 body[data-theme="dark"] nav.show ul li a:hover {
     color: white !important;
+}
+
+/* Screen reader only text */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Theme label */
+.theme-label {
+    display: none;
+    margin-left: 10px;
+    color: var(--header-text);
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    nav.show .theme-label {
+        display: inline-block;
+    }
 } 
