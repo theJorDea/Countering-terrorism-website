@@ -303,10 +303,12 @@ nav ul li {
 nav ul li a {
     color: var(--header-text);
     text-decoration: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    transition: background 0.3s, transform 0.2s;
+    font-weight: 500;
     position: relative;
+    padding: 8px 15px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    background-color: rgba(183, 28, 28, 0.7);
 }
 
 nav ul li a::after {
@@ -856,7 +858,7 @@ footer strong {
     content: "\f185"; /* Font Awesome sun icon */
     font-family: "Font Awesome 6 Free";
     font-weight: 900;
-    color: white;
+    color: white; /* This is the default for the header icon */
     font-size: 20px;
     position: absolute;
     top: 50%;
@@ -874,15 +876,16 @@ footer strong {
     content: "\f186"; /* Font Awesome moon icon */
     font-size: 18px;
     transform: translate(-50%, -50%) rotate(360deg);
+    /* Color will be inherited or set by nav.show specific rules */
 }
 
 .theme-toggle-label:hover {
     transform: scale(1.1);
 }
 
-/* Mobile Menu Toggle */
+/* Mobile Menu Toggle - отображаем для всех размеров экрана */
 .menu-toggle {
-    display: none;
+    display: none; /* Скрываем по умолчанию */
     background: none;
     border: none;
     color: var(--header-text);
@@ -970,11 +973,11 @@ body[data-theme="dark"] nav.show {
     box-shadow: 0 3px 15px var(--section-shadow);
 }
 
-/* Menu items styling - Both themes - Light grayish/beige buttons */
+/* Menu items styling - Both themes - Red buttons */
 body:not([data-theme="dark"]) nav.show ul li a,
 body[data-theme="dark"] nav.show ul li a {
-    color: #222 !important; /* Dark text for both themes */
-    background-color: rgba(158, 1, 1, 0.4); /* Light grayish/beige color from image */
+    color: white !important; /* White text for both themes */
+    background-color: rgba(183, 28, 28, 0.7); /* Using the requested color */
     border-radius: 10px;
     padding: 12px 20px;
     transition: all 0.3s ease;
@@ -987,19 +990,20 @@ body[data-theme="dark"] nav.show ul li a {
 
 body:not([data-theme="dark"]) nav.show ul li a:hover,
 body[data-theme="dark"] nav.show ul li a:hover {
-    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2), 
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2),
                 -2px -2px 6px rgba(255, 255, 255, 0.5);
     transform: translateY(-1px);
-    background-color: #e5dddd; /* Slightly lighter on hover */
+    background-color: rgba(183, 28, 28, 0.85);
 }
 
 /* Active menu items with themed borders */
 body:not([data-theme="dark"]) nav.show ul li a.active {
+    background-color: rgba(183, 28, 28, 0.9);
     padding: 10px 18px; /* Adjusted to compensate for border */
 }
 
 body[data-theme="dark"] nav.show ul li a.active {
-    background-color: rgba(158, 1, 1, 0.4);
+    background-color: rgba(183, 28, 28, 0.9);
     border: 2px solid #8f0000; /* Burgundy for dark theme */
     padding: 10px 18px; /* Adjusted to compensate for border */
 }
@@ -1014,7 +1018,7 @@ nav.show ul li a.active::after {
 /* Theme toggle styling - Both themes - Same as other buttons */
 body:not([data-theme="dark"]) nav.show .theme-toggle,
 body[data-theme="dark"] nav.show .theme-toggle {
-    background-color: rgba(158, 1, 1, 0.4); /* Same as menu buttons */
+    background-color: rgba(183, 28, 28, 0.7); /* Using the requested color */
     border-radius: 25px;
     padding: 10px 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -1074,33 +1078,18 @@ body[data-theme="dark"] nav.show .theme-toggle-label:before {
 }
 
 @media (max-width: 768px) {
-    header .container {
-        justify-content: space-between;
-        align-items: center;
-        padding-left: 20px;
-        padding-right: 20px;
+    /* Base nav styles - hidden by default */
+    nav {
+        display: none !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .menu-toggle {
+        display: block !important; /* Показываем только на мобильных */
     }
     
     .logo-container {
         justify-content: flex-start;
-    }
-    
-    nav {
-        display: none;
-        position: fixed; 
-        top: 65px;       
-        left: 0;
-        right: 0;
-        width: 100%;
-        background-color: var(--header-bg);
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        z-index: 1005;   
-        overflow-y: auto;
-    }
-    
-    .menu-toggle {
-        display: block;
-        padding: 10px;
     }
     
     nav.show {
@@ -2003,19 +1992,12 @@ section, div, nav, footer {
 /* Default text color for items in opened menu (caters to dark theme panel) */
 nav.show ul li a,
 nav.show .theme-name-label {
-    color: var(--header-text); /* This is light, good for dark panel */
+    color: black !important; /* Черный текст для светлой темы */
 }
 
 /* Special handling for the theme toggle icon color inside the opened menu */
 nav.show .theme-toggle .theme-toggle-label:before {
-    color: var(--header-text); /* Default to header text (light for dark panel) */
-}
-
-/* Override text and theme icon for light theme (when panel is light) */
-body[data-theme="light"] nav.show ul li a,
-body[data-theme="light"] nav.show .theme-name-label,
-body[data-theme="light"] nav.show .theme-toggle .theme-toggle-label:before {
-    color: #000000; /* Black for light panel */
+    color: black !important; /* Черный значок для светлой темы */
 }
 
 /* Original theme toggle icon color (for header) - ensure it's not affected if it was white */
@@ -2056,22 +2038,28 @@ body[data-theme="dark"] nav.show .theme-toggle:hover {
     height: 100%;
 }
 
+/* Override text and theme icon for light theme (when panel is light) */
+body[data-theme="light"] nav.show ul li a,
+body[data-theme="light"] nav.show .theme-name-label,
+body[data-theme="light"] nav.show .theme-toggle .theme-toggle-label:before,
+body[data-theme="light"] nav.show .theme-label,
+body[data-theme="light"] nav.show button {
+    color: #000000; /* Black for light panel */
+}
+
 /* Ensure text in light theme menu is black */
 body:not([data-theme="dark"]) nav.show ul li a,
 body:not([data-theme="dark"]) nav.show .theme-name-label,
-body:not([data-theme="dark"]) nav.show .theme-toggle .theme-toggle-label:before {
-    color: #000000 !important; /* Force black for light theme */
-}
-
-/* Strengthen dark theme text contrast */
-body[data-theme="dark"] nav.show ul li a,
-body[data-theme="dark"] nav.show .theme-name-label,
-body[data-theme="dark"] nav.show .theme-toggle .theme-toggle-label:before {
-    color: white !important; /* Force white for dark theme */
-}
-
-body[data-theme="dark"] nav.show ul li a:hover {
-    color: white !important;
+body:not([data-theme="dark"]) nav.show .theme-toggle .theme-toggle-label:before,
+body:not([data-theme="dark"]) nav.show .theme-label,
+body:not([data-theme="dark"]) nav.show button,
+[data-theme="light"] nav.show ul li a,
+[data-theme="light"] nav.show .theme-name-label,
+[data-theme="light"] nav.show .theme-toggle .theme-toggle-label:before,
+[data-theme="light"] nav.show .theme-label,
+[data-theme="light"] nav.show button {
+    color: black !important; /* Черный текст для светлой темы */
+    font-weight: bold !important; 
 }
 
 /* Screen reader only text */
@@ -2098,5 +2086,90 @@ body[data-theme="dark"] nav.show ul li a:hover {
 @media (max-width: 768px) {
     nav.show .theme-label {
         display: inline-block;
+        color: black !important;
+        font-weight: bold !important;
     }
+}
+
+/* Темная тема - белый текст */
+[data-theme="dark"] nav.show ul li a {
+    color: white !important;
+}
+
+[data-theme="dark"] nav.show .theme-label {
+    color: white !important;
+}
+
+/* Desktop navigation link styling: remove button appearance */
+@media (min-width: 769px) {
+    /* Стили для контейнера навигации */
+    .header-right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    
+    /* Показываем главную навигацию */
+    nav#main-navigation {
+        display: block !important;
+    }
+    
+    /* Стилизуем список навигации */
+    nav#main-navigation ul {
+        display: flex !important;
+        margin: 0;
+        padding: 0;
+    }
+    
+    /* Стили для элементов меню */
+    nav#main-navigation ul li {
+        margin-left: 15px;
+    }
+    
+    /* Стили для ссылок */
+    nav#main-navigation ul li a {
+        color: var(--header-text);
+        text-decoration: none;
+        position: relative;
+        padding: 5px 8px;
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+    }
+    
+    /* Стили при наведении и для активных ссылок */
+    nav#main-navigation ul li a:hover,
+    nav#main-navigation ul li a.active {
+        background-color: transparent !important;
+        transform: none !important;
+    }
+    
+    /* Полностью скрываем кнопку меню */
+    .menu-toggle,
+    .mobile-menu-toggle,
+    button.menu-toggle,
+    .header-right .menu-toggle,
+    header .container .menu-toggle {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+        position: absolute !important;
+        z-index: -9999 !important;
+    }
+}
+
+/* Ensure text in dark theme menu is white */
+body[data-theme="dark"] nav.show ul li a,
+body[data-theme="dark"] nav.show .theme-name-label,
+body[data-theme="dark"] nav.show .theme-toggle .theme-toggle-label:before,
+body[data-theme="dark"] nav.show .theme-label {
+    color: white !important; /* Белый текст для темной темы */
+    font-weight: bold !important;
+}
+
+body[data-theme="dark"] nav.show ul li a:hover {
+    color: white !important;
 } 

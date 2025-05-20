@@ -62,7 +62,7 @@
         width: 100% !important;
         padding: 15px !important;
         font-size: 1.2rem !important;
-        color: white !important;
+        color: black !important;
         background-color: rgba(183, 28, 28, 0.7) !important;
         border-radius: 8px !important;
         margin: 5px 0 !important;
@@ -73,6 +73,28 @@
     nav.show ul li a.active {
         background-color: rgba(183, 28, 28, 0.85) !important;
         transform: scale(1.05) !important;
+    }
+    
+    /* Темная тема - белый текст */
+    [data-theme="dark"] nav.show ul li a {
+        color: white !important;
+    }
+    
+    [data-theme="dark"] nav.show .theme-label {
+        color: white !important;
+        font-weight: bold !important;
+    }
+    
+    /* Светлая тема - черный текст */
+    [data-theme="light"] nav.show ul li a,
+    body:not([data-theme="dark"]) nav.show ul li a {
+        color: black !important;
+    }
+    
+    [data-theme="light"] nav.show .theme-label,
+    body:not([data-theme="dark"]) nav.show .theme-label {
+        color: black !important;
+        font-weight: bold !important;
     }
     
     /* Prevent page scroll when menu is open */
@@ -120,12 +142,24 @@
     
     nav.show .theme-label {
         display: inline-block !important;
-        color: white !important;
+        color: black !important;
         margin-left: 10px !important;
+        font-weight: bold !important;
     }
     
     nav.show .theme-toggle-label:before {
-        color: white !important;
+        color: black !important; /* Черный значок для светлой темы */
+    }
+    
+    /* Темная тема - белый значок */
+    [data-theme="dark"] nav.show .theme-toggle-label:before {
+        color: white !important; /* Белый значок для темной темы */
+    }
+    
+    /* Светлая тема - черный значок */
+    [data-theme="light"] nav.show .theme-toggle-label:before,
+    body:not([data-theme="dark"]) nav.show .theme-toggle-label:before {
+        color: black !important; /* Черный значок для светлой темы */
     }
     
     /* Animation for menu items */
