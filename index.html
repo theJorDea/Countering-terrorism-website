@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Терроризму НЕТ</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/mobile-fixes.css">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="js/script.js" defer></script>
@@ -19,14 +20,15 @@
                 </a>
             </div>
             <div class="header-right">
-                <button class="menu-toggle" aria-label="Открыть меню" aria-expanded="false" aria-controls="main-navigation">
+                <button class="menu-toggle mobile-menu-toggle" aria-label="Открыть меню" aria-expanded="false" aria-controls="main-navigation">
                     <span class="menu-toggle-icon">
                         <span class="menu-toggle-line"></span>
                         <span class="menu-toggle-line"></span>
                         <span class="menu-toggle-line"></span>
                     </span>
+                    <span class="sr-only">Меню</span>
                 </button>
-                <nav>
+                <nav id="main-navigation">
                     <ul>
                         <li><a href="index.html" class="active">Главная</a></li>
                         <li><a href="about.html">О нас</a></li>
@@ -36,6 +38,7 @@
                         <li class="theme-toggle">
                             <input type="checkbox" id="theme-toggle-checkbox" class="theme-toggle-checkbox">
                             <label for="theme-toggle-checkbox" class="theme-toggle-label"></label>
+                            <span class="theme-label">Тема</span>
                         </li>
                     </ul>
                 </nav>
