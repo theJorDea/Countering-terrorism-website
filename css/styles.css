@@ -856,7 +856,7 @@ footer strong {
     content: "\f185"; /* Font Awesome sun icon */
     font-family: "Font Awesome 6 Free";
     font-weight: 900;
-    color: white;
+    color: white; /* This is the default for the header icon */
     font-size: 20px;
     position: absolute;
     top: 50%;
@@ -874,6 +874,7 @@ footer strong {
     content: "\f186"; /* Font Awesome moon icon */
     font-size: 18px;
     transform: translate(-50%, -50%) rotate(360deg);
+    /* Color will be inherited or set by nav.show specific rules */
 }
 
 .theme-toggle-label:hover {
@@ -2011,13 +2012,6 @@ nav.show .theme-toggle .theme-toggle-label:before {
     color: var(--header-text); /* Default to header text (light for dark panel) */
 }
 
-/* Override text and theme icon for light theme (when panel is light) */
-body[data-theme="light"] nav.show ul li a,
-body[data-theme="light"] nav.show .theme-name-label,
-body[data-theme="light"] nav.show .theme-toggle .theme-toggle-label:before {
-    color: #000000; /* Black for light panel */
-}
-
 /* Original theme toggle icon color (for header) - ensure it's not affected if it was white */
 .theme-toggle-label:before {
     content: "\f185"; /* Font Awesome sun icon */
@@ -2056,6 +2050,13 @@ body[data-theme="dark"] nav.show .theme-toggle:hover {
     height: 100%;
 }
 
+/* Override text and theme icon for light theme (when panel is light) */
+body[data-theme="light"] nav.show ul li a,
+body[data-theme="light"] nav.show .theme-name-label,
+body[data-theme="light"] nav.show .theme-toggle .theme-toggle-label:before {
+    color: #000000; /* Black for light panel */
+}
+
 /* Ensure text in light theme menu is black */
 body:not([data-theme="dark"]) nav.show ul li a,
 body:not([data-theme="dark"]) nav.show .theme-name-label,
@@ -2063,10 +2064,11 @@ body:not([data-theme="dark"]) nav.show .theme-toggle .theme-toggle-label:before 
     color: #000000 !important; /* Force black for light theme */
 }
 
-/* Strengthen dark theme text contrast */
+/* Ensure text in dark theme menu is white */
 body[data-theme="dark"] nav.show ul li a,
 body[data-theme="dark"] nav.show .theme-name-label,
-body[data-theme="dark"] nav.show .theme-toggle .theme-toggle-label:before {
+body[data-theme="dark"] nav.show .theme-toggle .theme-toggle-label:before,
+body[data-theme="dark"] nav.show .theme-label {
     color: white !important; /* Force white for dark theme */
 }
 

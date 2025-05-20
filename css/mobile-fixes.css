@@ -75,6 +75,15 @@
         transform: scale(1.05) !important;
     }
     
+    /* Темная тема - белый текст */
+    [data-theme="dark"] nav.show ul li a {
+        color: white !important;
+    }
+    
+    [data-theme="dark"] nav.show .theme-label {
+        color: white !important;
+    }
+    
     /* Prevent page scroll when menu is open */
     body.no-scroll {
         overflow: hidden !important;
