@@ -127,41 +127,34 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Функция открытия меню
         function openMobileMenu() {
-            // Сохраняем позицию скролла
+            // Сначала показываем меню
+            nav.classList.add('show');
+            menuToggle.setAttribute('aria-expanded', 'true');
+
+            // Затем сохраняем позицию скролла и блокируем страницу
             savedScrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-            
-            // Блокируем скролл страницы
             document.body.classList.add('no-scroll');
             document.body.style.top = `-${savedScrollPosition}px`;
             
-            // Показываем меню
-            nav.classList.add('show');
-            
-            // Обновляем ARIA и анимацию кнопки
-            menuToggle.setAttribute('aria-expanded', 'true');
-            
-            console.log('Мобильное меню открыто');
+            console.log('Мобильное меню открыто, позиция скролла:', savedScrollPosition);
         }
         
         // Функция закрытия меню
         function closeMobileMenu() {
-            // Скрываем меню
-            nav.classList.remove('show');
-            
-            // Восстанавливаем скролл
+            // Сначала восстанавливаем скролл
             document.body.classList.remove('no-scroll');
             document.body.style.top = '';
-            
-            // Возвращаем позицию скролла
             if (savedScrollPosition > 0) {
                 window.scrollTo(0, savedScrollPosition);
-                savedScrollPosition = 0;
             }
-            
-            // Обновляем ARIA и анимацию кнопки
+
+            // Затем скрываем меню
+            nav.classList.remove('show');
             menuToggle.setAttribute('aria-expanded', 'false');
             
-            console.log('Мобильное меню закрыто');
+            // Сбрасываем сохраненную позицию ПОСЛЕ того, как она была использована
+            savedScrollPosition = 0; 
+            console.log('Мобильное меню закрыто, позиция скролла сброшена');
         }
         
         // Закрытие меню при клике по фону (только по самому nav элементу)
