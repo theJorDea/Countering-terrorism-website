@@ -105,128 +105,135 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Mobile menu toggle functionality
+    // ========== МОБИЛЬНОЕ МЕНЮ - ИСПРАВЛЕННАЯ ЛОГИКА С ОРИГИНАЛЬНЫМИ КЛАССАМИ ==========
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('nav');
     let savedScrollPosition = 0;
     
     if (menuToggle && nav) {
+        // Основная функция переключения меню
         menuToggle.addEventListener('click', function(e) {
             e.stopPropagation();
             e.preventDefault();
             
-            const isExpanded = this.getAttribute('aria-expanded') === 'true';
-            const newState = !isExpanded;
+            const isMenuOpen = nav.classList.contains('show');
             
-            // Update ARIA state
-            this.setAttribute('aria-expanded', newState);
-            
-            if (newState) {
-                // Opening menu
-                savedScrollPosition = window.scrollY;
-                nav.classList.add('show');
-                document.body.classList.add('no-scroll');
-                document.body.style.top = `-${savedScrollPosition}px`;
-                
-                // Focus management for accessibility
-                setTimeout(() => {
-                    const firstMenuItem = nav.querySelector('ul li a');
-                    if (firstMenuItem) {
-                        firstMenuItem.focus();
-                    }
-                }, 100);
-                
+            if (isMenuOpen) {
+                closeMobileMenu();
             } else {
-                // Closing menu
-                closeMenu();
+                openMobileMenu();
             }
         });
         
-        // Function to close menu and restore scroll position
-        function closeMenu() {
+        // Функция открытия меню
+        function openMobileMenu() {
+            // Сохраняем позицию скролла
+            savedScrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+            
+            // Блокируем скролл страницы
+            document.body.classList.add('no-scroll');
+            document.body.style.top = `-${savedScrollPosition}px`;
+            
+            // Показываем меню
+            nav.classList.add('show');
+            
+            // Обновляем ARIA и анимацию кнопки
+            menuToggle.setAttribute('aria-expanded', 'true');
+            
+            console.log('Мобильное меню открыто');
+        }
+        
+        // Функция закрытия меню
+        function closeMobileMenu() {
+            // Скрываем меню
             nav.classList.remove('show');
-            menuToggle.setAttribute('aria-expanded', 'false');
+            
+            // Восстанавливаем скролл
             document.body.classList.remove('no-scroll');
             document.body.style.top = '';
             
-            // Restore scroll position smoothly
+            // Возвращаем позицию скролла
             if (savedScrollPosition > 0) {
-                window.scrollTo({
-                    top: savedScrollPosition,
-                    behavior: 'instant'
-                });
+                window.scrollTo(0, savedScrollPosition);
                 savedScrollPosition = 0;
             }
+            
+            // Обновляем ARIA и анимацию кнопки
+            menuToggle.setAttribute('aria-expanded', 'false');
+            
+            console.log('Мобильное меню закрыто');
         }
         
-        // Handle menu item clicks
-        const menuItems = document.querySelectorAll('nav ul li a');
-        menuItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                if (window.innerWidth <= 768) {
-                    const currentPath = window.location.pathname;
-                    const href = this.getAttribute('href');
-                    
-                    // Handle different types of links
-                    if (href.startsWith('#') && href !== '#') {
-                        // Hash links - scroll to element
-                        e.preventDefault();
-                        const targetElement = document.querySelector(href);
-                        if (targetElement) {
-                            closeMenu();
-                            setTimeout(() => {
-                                targetElement.scrollIntoView({
-                                    behavior: 'smooth',
-                                    block: 'start'
-                                });
-                            }, 150);
-                        }
-                        return;
-                    }
-                    
-                    // Check if it's current page link
-                    const isCurrentPage = (
-                        (currentPath.endsWith(href)) || 
-                        (currentPath.endsWith('/') && href === 'index.html') ||
-                        (currentPath === '/' && href === 'index.html') ||
-                        href === '#'
-                    );
-                    
-                    if (isCurrentPage) {
-                        e.preventDefault();
-                        closeMenu();
-                        return;
-                    }
-                    
-                    // For navigation to other pages, close menu
-                    closeMenu();
-                }
-            });
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (nav.classList.contains('show') && 
-                !nav.contains(e.target) && 
-                !menuToggle.contains(e.target)) {
-                closeMenu();
+        // Закрытие меню при клике по фону
+        nav.addEventListener('click', function(e) {
+            // Если клик был по самому nav (фону), а не по ul или его содержимому
+            if (e.target === nav) {
+                closeMobileMenu();
             }
         });
         
-        // Close menu on escape key
+        // Закрытие меню при нажатии Escape
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && nav.classList.contains('show')) {
-                closeMenu();
-                menuToggle.focus(); // Return focus to toggle button
+                closeMobileMenu();
             }
         });
         
-        // Handle window resize - close menu if screen becomes large
+        // Закрытие меню при изменении размера окна (переход на десктоп)
         window.addEventListener('resize', function() {
             if (window.innerWidth > 768 && nav.classList.contains('show')) {
-                closeMenu();
+                closeMobileMenu();
             }
         });
+        
+        // Обработка кликов по пунктам меню
+        document.addEventListener('click', function(e) {
+            // Проверяем, что клик был по ссылке в мобильном меню
+            if (e.target.tagName === 'A' && nav.classList.contains('show')) {
+                const href = e.target.getAttribute('href');
+                const currentPath = window.location.pathname;
+                
+                // Обработка якорных ссылок
+                if (href && href.startsWith('#') && href !== '#') {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(href);
+                    if (targetElement) {
+                        closeMobileMenu();
+                        setTimeout(() => {
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }, 300);
+                    }
+                    return;
+                }
+                
+                // Проверка, является ли ссылка текущей страницей
+                const isCurrentPage = (
+                    (currentPath.endsWith(href)) || 
+                    (currentPath.endsWith('/') && href === 'index.html') ||
+                    (currentPath === '/' && href === 'index.html') ||
+                    href === '#'
+                );
+                
+                if (isCurrentPage) {
+                    e.preventDefault();
+                    closeMobileMenu();
+                    return;
+                }
+                
+                // Для обычных ссылок - закрываем меню с небольшой задержкой
+                setTimeout(() => {
+                    closeMobileMenu();
+                }, 100);
+            }
+        });
+        
+        // Отладочная информация
+        console.log('Мобильное меню инициализировано');
+    } else {
+        console.warn('Элементы мобильного меню не найдены');
     }
     
     // Form submission handling
