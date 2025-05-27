@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // ========== МОБИЛЬНОЕ МЕНЮ - ИСПРАВЛЕННАЯ ЛОГИКА С ОРИГИНАЛЬНЫМИ КЛАССАМИ ==========
+    // ========== МОБИЛЬНОЕ МЕНЮ - ИСПРАВЛЕННАЯ ЛОГИКА БЕЗ КОНФЛИКТОВ ==========
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('nav');
     let savedScrollPosition = 0;
@@ -164,10 +164,11 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Мобильное меню закрыто');
         }
         
-        // Закрытие меню при клике по фону
+        // Закрытие меню при клике по фону (только по самому nav элементу)
         nav.addEventListener('click', function(e) {
-            // Если клик был по самому nav (фону), а не по ul или его содержимому
+            // Проверяем что клик именно по nav, а не по его содержимому
             if (e.target === nav) {
+                e.stopPropagation();
                 closeMobileMenu();
             }
         });
@@ -186,10 +187,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Обработка кликов по пунктам меню
-        document.addEventListener('click', function(e) {
-            // Проверяем, что клик был по ссылке в мобильном меню
-            if (e.target.tagName === 'A' && nav.classList.contains('show')) {
+        // Обработка кликов по пунктам меню - ТОЛЬКО для ссылок внутри меню
+        nav.addEventListener('click', function(e) {
+            // Проверяем что это именно ссылка (тег A)
+            if (e.target.tagName === 'A') {
                 const href = e.target.getAttribute('href');
                 const currentPath = window.location.pathname;
                 
@@ -223,10 +224,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
                 
-                // Для обычных ссылок - закрываем меню с небольшой задержкой
-                setTimeout(() => {
-                    closeMobileMenu();
-                }, 100);
+                // Для обычных ссылок - закрываем меню
+                closeMobileMenu();
             }
         });
         
