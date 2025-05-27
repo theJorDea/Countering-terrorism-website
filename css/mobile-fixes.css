@@ -35,7 +35,7 @@
     
     /* ========== ФОНОВОЕ РАЗМЫТИЕ ДЛЯ СВЕТЛОЙ ТЕМЫ ========== */
     body:not([data-theme="dark"]) nav.show {
-        background-color: transparent !important;
+        background-color: rgba(0, 0, 0, 0.3) !important;
         backdrop-filter: blur(15px) !important;
         -webkit-backdrop-filter: blur(15px) !important;
         border: none !important;
@@ -44,7 +44,7 @@
     
     /* ========== ФОНОВОЕ РАЗМЫТИЕ ДЛЯ ТЕМНОЙ ТЕМЫ ========== */
     [data-theme="dark"] nav.show {
-        background-color: transparent !important;
+        background-color: rgba(0, 0, 0, 0.5) !important;
         backdrop-filter: blur(15px) !important;
         -webkit-backdrop-filter: blur(15px) !important;
         border: none !important;
@@ -213,11 +213,11 @@
     /* ========== FIREFOX FALLBACK ДЛЯ BACKDROP-FILTER ========== */
     @supports not (backdrop-filter: blur(15px)) {
         body:not([data-theme="dark"]) nav.show {
-            background-color: rgba(30, 30, 30, 0.95) !important;
+            background-color: rgba(0, 0, 0, 0.85) !important;
         }
         
         [data-theme="dark"] nav.show {
-            background-color: rgba(10, 10, 10, 0.95) !important;
+            background-color: rgba(0, 0, 0, 0.9) !important;
         }
     }
 }
