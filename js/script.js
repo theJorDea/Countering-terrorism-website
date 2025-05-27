@@ -108,144 +108,126 @@ document.addEventListener('DOMContentLoaded', function() {
     // Mobile menu toggle functionality
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('nav');
+    let savedScrollPosition = 0;
     
-    if (menuToggle) {
+    if (menuToggle && nav) {
         menuToggle.addEventListener('click', function(e) {
-            e.stopPropagation(); // Prevent event bubbling
-            e.preventDefault(); // Prevent any default action
+            e.stopPropagation();
+            e.preventDefault();
             
             const isExpanded = this.getAttribute('aria-expanded') === 'true';
-            this.setAttribute('aria-expanded', !isExpanded);
+            const newState = !isExpanded;
             
-            // Toggle the menu visibility
-            if (!isExpanded) {
+            // Update ARIA state
+            this.setAttribute('aria-expanded', newState);
+            
+            if (newState) {
                 // Opening menu
+                savedScrollPosition = window.scrollY;
                 nav.classList.add('show');
                 document.body.classList.add('no-scroll');
+                document.body.style.top = `-${savedScrollPosition}px`;
                 
-                // Прокручиваем страницу наверх при открытии меню
-                /* window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                }); */
+                // Focus management for accessibility
+                setTimeout(() => {
+                    const firstMenuItem = nav.querySelector('ul li a');
+                    if (firstMenuItem) {
+                        firstMenuItem.focus();
+                    }
+                }, 100);
                 
-                // Make menu items immediately visible without animation
-                const menuItems = nav.querySelectorAll('ul li');
-                menuItems.forEach(item => {
-                    item.style.opacity = 1;
-                    item.style.transform = 'translateY(0)';
-                });
-                
-                // Store current scroll position
-                document.body.style.top = `-${window.scrollY}px`;
             } else {
                 // Closing menu
-                nav.classList.remove('show');
-                document.body.classList.remove('no-scroll');
-                
-                // Restore scroll position
-                const scrollY = document.body.style.top;
-                document.body.style.top = '';
-                window.scrollTo(0, parseInt(scrollY || '0') * -1);
+                closeMenu();
             }
         });
-    }
-    
-    // Handle menu item clicks - only close for different pages
-    const menuItems = document.querySelectorAll('nav ul li a');
-    menuItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-            if (window.innerWidth <= 768) {
-                // Get current page and link target
-                const currentPath = window.location.pathname;
-                const href = this.getAttribute('href');
-                
-                // Сохраним текущую позицию прокрутки для всех типов ссылок
-                const savedScrollPosition = window.scrollY;
-                
-                // If link points to current page or is a hash link, prevent navigation
-                if ((href.startsWith('#')) || 
-                    (currentPath.endsWith(href)) || 
-                    (currentPath.endsWith('/') && href === 'index.html') ||
-                    (currentPath === '/' && href === 'index.html')) {
-                    
-                    // For hash links, still allow smooth scrolling but keep menu open
-                    if (href.startsWith('#') && href !== '#') {
-                        e.preventDefault();
-                        const targetElement = document.querySelector(href);
-                        if (targetElement) {
-                            // Close menu before scrolling
-                            nav.classList.remove('show');
-                            menuToggle.setAttribute('aria-expanded', 'false');
-                            document.body.classList.remove('no-scroll');
-                            
-                            // Не сбрасываем позицию прокрутки при закрытии меню
-                            document.body.style.top = '';
-                            
-                            // Scroll to element
-                            setTimeout(() => {
-                                targetElement.scrollIntoView({
-                                    behavior: 'smooth'
-                                });
-                            }, 100);
-                        }
-                        return;
-                    }
-                    
-                    // Для обычных ссылок на текущую страницу - закрываем меню и не скроллим
-                    if (href !== '#') {
-                        e.preventDefault();
-                        
-                        // Close menu but maintain scroll position
-                        nav.classList.remove('show');
-                        menuToggle.setAttribute('aria-expanded', 'false');
-                        document.body.classList.remove('no-scroll');
-                        document.body.style.top = '';
-                        
-                        // Восстанавливаем текущую позицию прокрутки
-                        setTimeout(() => {
-                            window.scrollTo(0, savedScrollPosition);
-                        }, 10);
-                        
-                        return;
-                    }
-                    
-                    // For current page links, just prevent default
-                    e.preventDefault();
-                    return;
-                }
-                
-                // For other pages, close menu before navigation
-                nav.classList.remove('show');
-                menuToggle.setAttribute('aria-expanded', 'false');
-                document.body.classList.remove('no-scroll');
-                document.body.style.top = '';
-            }
-        });
-    });
-    
-    // Also close menu when clicking outside of it
-    document.addEventListener('click', function(e) {
-        // If menu is open and click is outside of nav and not on menu toggle
-        if (nav.classList.contains('show') && 
-            !nav.contains(e.target) && 
-            !menuToggle.contains(e.target)) {
-            
-            // Сохраняем текущую позицию прокрутки
-            const savedScrollPosition = window.scrollY;
-            
-            // Закрываем меню
+        
+        // Function to close menu and restore scroll position
+        function closeMenu() {
             nav.classList.remove('show');
             menuToggle.setAttribute('aria-expanded', 'false');
             document.body.classList.remove('no-scroll');
             document.body.style.top = '';
             
-            // Восстанавливаем позицию прокрутки
-            setTimeout(() => {
-                window.scrollTo(0, savedScrollPosition);
-            }, 10);
+            // Restore scroll position smoothly
+            if (savedScrollPosition > 0) {
+                window.scrollTo({
+                    top: savedScrollPosition,
+                    behavior: 'instant'
+                });
+                savedScrollPosition = 0;
+            }
         }
-    });
+        
+        // Handle menu item clicks
+        const menuItems = document.querySelectorAll('nav ul li a');
+        menuItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    const currentPath = window.location.pathname;
+                    const href = this.getAttribute('href');
+                    
+                    // Handle different types of links
+                    if (href.startsWith('#') && href !== '#') {
+                        // Hash links - scroll to element
+                        e.preventDefault();
+                        const targetElement = document.querySelector(href);
+                        if (targetElement) {
+                            closeMenu();
+                            setTimeout(() => {
+                                targetElement.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'start'
+                                });
+                            }, 150);
+                        }
+                        return;
+                    }
+                    
+                    // Check if it's current page link
+                    const isCurrentPage = (
+                        (currentPath.endsWith(href)) || 
+                        (currentPath.endsWith('/') && href === 'index.html') ||
+                        (currentPath === '/' && href === 'index.html') ||
+                        href === '#'
+                    );
+                    
+                    if (isCurrentPage) {
+                        e.preventDefault();
+                        closeMenu();
+                        return;
+                    }
+                    
+                    // For navigation to other pages, close menu
+                    closeMenu();
+                }
+            });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (nav.classList.contains('show') && 
+                !nav.contains(e.target) && 
+                !menuToggle.contains(e.target)) {
+                closeMenu();
+            }
+        });
+        
+        // Close menu on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && nav.classList.contains('show')) {
+                closeMenu();
+                menuToggle.focus(); // Return focus to toggle button
+            }
+        });
+        
+        // Handle window resize - close menu if screen becomes large
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && nav.classList.contains('show')) {
+                closeMenu();
+            }
+        });
+    }
     
     // Form submission handling
     const contactForm = document.querySelector('.contact-form');
