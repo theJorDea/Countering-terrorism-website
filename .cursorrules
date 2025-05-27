@@ -1,0 +1,173 @@
+# Counter-Terrorism Website - .cursorrules
+
+## Project Intelligence & Patterns
+
+### Critical Project Context
+This is a Russian-language educational website about terrorism prevention ("Терроризму НЕТ"). The project serves as a public service resource with government-appropriate professional design. All development must maintain the serious, trustworthy nature while being accessible and user-friendly.
+
+### Key Technical Patterns
+
+#### Mobile Menu Architecture
+**Critical Pattern**: The mobile menu uses a full-screen overlay with transparent background and blur effect:
+- Background: `rgba(0, 0, 0, 0.65)` with `backdrop-filter: blur(8px)`
+- Button styling: Consistent `rgba(183, 28, 28, 0.7)` for all menu items
+- **MUST preserve scroll position**: Store `window.scrollY` before menu operations, restore after closing
+- Theme-aware text colors: Black for light theme, white for dark theme
+
+#### Theme System Implementation
+**Pattern**: CSS custom properties for complete theming:
+- Root variables define light theme defaults
+- `[data-theme="dark"]` overrides for dark theme
+- **All components must support both themes** - no exceptions
+- localStorage persistence with fallback to 'light'
+- 0.5s transition timing for smooth theme changes
+
+#### Emergency Services Integration
+**Critical UX Pattern**: Floating emergency button (112) appears ONLY on homepage:
+- Auto-expand on page load, auto-collapse after 2 seconds
+- One-click copy to clipboard with tooltip feedback
+- Must maintain professional appearance - this is emergency contact
+
+### Development Workflow Preferences
+
+#### CSS Organization
+**Strict Pattern**: Follow established CSS architecture:
+1. CSS Variables (theming)
+2. Base styles and resets
+3. Component styles
+4. Responsive media queries
+5. Animation definitions
+
+#### JavaScript Structure
+**Pattern**: Everything inside DOMContentLoaded wrapper:
+1. Feature detection first
+2. Theme management
+3. Navigation handling
+4. Emergency button functionality
+5. Event listeners last
+6. Utility functions outside wrapper
+
+#### Responsive Breakpoints
+**Standard Set**: 480px, 576px, 768px, 992px, 1200px
+- Mobile-first approach always
+- Test at 768px breakpoint (mobile menu transition)
+- Ensure touch targets are minimum 44px
+
+### Critical User Experience Rules
+
+#### Scroll Position Management
+**NEVER allow scroll position to be lost during navigation**:
+- Mobile menu operations must preserve position
+- Hash link navigation should be smooth
+- Current page links should not trigger scroll-to-top
+
+#### Emergency Access Priority
+**112 emergency number must always be accessible**:
+- Floating button on homepage
+- Phone number in footer on all pages
+- FSB hotline in footer: 8 (495) 224-22-22
+- Copy functionality must work reliably
+
+#### Professional Appearance Standards
+**Government-appropriate design requirements**:
+- Red color scheme: `#b71c1c` / `rgba(183, 28, 28, 0.7)`
+- No flashy animations or distracting elements
+- Content must be educational, not fear-inducing
+- Maintain authority through clean, professional design
+
+### Browser Compatibility Patterns
+
+#### Backdrop Filter Handling
+**Pattern for modern effects with fallbacks**:
+```css
+backdrop-filter: blur(8px);
+-webkit-backdrop-filter: blur(8px);
+
+/* Firefox fallback */
+@-moz-document url-prefix() {
+    background-color: var(--header-bg);
+    opacity: 0.95;
+}
+```
+
+#### Cross-Browser Testing Priority
+1. Chrome/Chromium (primary target)
+2. Safari (webkit prefixes critical)
+3. Firefox (backdrop-filter fallbacks needed)
+4. Mobile browsers (primary use case)
+
+### Content and Language Guidelines
+
+#### Russian Language Context
+- Primary language is Russian - respect Cyrillic encoding
+- Cultural context: Serious government service website
+- Terminology: Use formal, official language for safety content
+- Emergency services: Always include 112 (universal emergency)
+
+#### Content Hierarchy
+1. Emergency contact information (highest priority)
+2. Basic terrorism recognition information
+3. Safety guidelines (памятка)
+4. Historical context and additional resources
+5. Organizational information
+
+### Performance and Optimization Rules
+
+#### Critical Performance Patterns
+- System fonts only (no web font loading delay)
+- CSS custom properties for efficient theming
+- Minimal JavaScript footprint
+- WebP images where supported
+
+#### Mobile Performance Priority
+**Mobile-first performance optimization**:
+- Touch targets minimum 44px
+- Fast menu animations (0.3s max)
+- Efficient DOM manipulation
+- Minimal layout thrashing
+
+### Git and Version Control Patterns
+
+#### Branch Management
+- `main`: Production-ready code
+- `version-X.Y`: Stable release branches  
+- Feature branches for specific improvements
+- Mobile improvements: Test thoroughly before merge
+
+#### Commit Message Style
+- English commit messages for clarity
+- Descriptive commits for mobile UX changes
+- Reference issue types: "Fix mobile menu scroll position"
+
+### Development Environment Notes
+
+#### Windows PowerShell Considerations
+- Cyrillic encoding configured for git
+- Use `chcp 65001` for UTF-8 console
+- Python http.server for local development testing
+
+#### Testing Protocol
+**Essential testing checklist**:
+1. Mobile menu functionality across devices
+2. Theme switching in all browsers
+3. Emergency button behavior
+4. Scroll position preservation
+5. Cross-browser compatibility (especially Firefox)
+
+### Common Issues and Solutions
+
+#### Mobile Menu Debug Pattern
+If mobile menu issues arise:
+1. Check `z-index` hierarchy (menu-toggle: 1500, nav: 1200)
+2. Verify `overflow: hidden` on body when menu open
+3. Confirm scroll position storage/restore logic
+4. Test backdrop-filter fallbacks
+
+#### Theme Integration Debugging
+For theme-related issues:
+1. Verify CSS custom property inheritance
+2. Check localStorage persistence
+3. Confirm both light/dark state handling
+4. Test transition animations
+
+This project represents a successful implementation of modern web standards for a serious public service website. Maintain the balance between modern UX and professional government-appropriate design. 
