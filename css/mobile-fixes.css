@@ -152,23 +152,35 @@
         padding: 8px 15px;
         border-radius: 6px;
         transition: all 0.3s ease;
-        background-color: rgba(183, 28, 28, 0.7);
+        background-color: transparent; /* Remove background rectangle */
     }
 
-    /* Remove white lines from desktop navigation */
+    /* Create organic, beautiful white line */
     nav#desktop-navigation ul li a::after {
-        display: none !important;
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 3px; /* Slightly thicker for better visibility */
+        bottom: -2px; /* Position below the text */
+        left: 50%;
+        background: linear-gradient(90deg, transparent, var(--header-text), transparent); /* Gradient for organic look */
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth organic animation */
+        transform: translateX(-50%);
+        border-radius: 2px; /* Rounded edges for organic look */
+        opacity: 0;
     }
 
     nav#desktop-navigation ul li a:hover::after,
     nav#desktop-navigation ul li a.active::after {
-        display: none !important;
+        width: 85%; /* Slightly wider for better proportion */
+        opacity: 1;
     }
 
     nav#desktop-navigation ul li a:hover,
     nav#desktop-navigation ul li a.active {
-        background-color: rgba(255, 255, 255, 0.2);
-        transform: translateY(-2px);
+        background-color: transparent; /* No background rectangle */
+        transform: translateY(-1px); /* Subtle lift effect */
+        text-shadow: 0 1px 3px rgba(0,0,0,0.2); /* Subtle text shadow for depth */
     }
 
     /* Adjust header-right layout for desktop */
