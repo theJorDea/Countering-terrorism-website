@@ -2146,7 +2146,7 @@ body[data-theme="dark"] nav.show ul li a:hover {
     right: 30px;
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, #b71c1c, #d32f2f);
+    background: linear-gradient(135deg, #8b0000, #b71c1c);
     color: white;
     border: none;
     border-radius: 50%;
@@ -2156,20 +2156,20 @@ body[data-theme="dark"] nav.show ul li a:hover {
     visibility: hidden;
     transition: all 0.3s ease;
     z-index: 1000;
-    box-shadow: 0 6px 20px rgba(183, 28, 28, 0.4);
+    box-shadow: 0 6px 20px rgba(139, 0, 0, 0.3);
     animation: pulse 2s infinite;
 }
 
 .back-to-top.show {
-    opacity: 0.9;
+    opacity: 0.7;
     visibility: visible;
 }
 
 .back-to-top:hover {
-    background: linear-gradient(135deg, #d32f2f, #f44336);
+    background: linear-gradient(135deg, #a00000, #d32f2f);
     transform: translateY(-3px) scale(1.1);
-    box-shadow: 0 8px 25px rgba(183, 28, 28, 0.6);
-    opacity: 1;
+    box-shadow: 0 8px 25px rgba(139, 0, 0, 0.5);
+    opacity: 0.9;
     animation: none;
 }
 
@@ -2179,12 +2179,12 @@ body[data-theme="dark"] nav.show ul li a:hover {
 
 @keyframes pulse {
     0% {
-        box-shadow: 0 6px 20px rgba(183, 28, 28, 0.4);
+        box-shadow: 0 6px 20px rgba(139, 0, 0, 0.3);
     }
     50% {
-        box-shadow: 0 6px 20px rgba(183, 28, 28, 0.6), 0 0 0 10px rgba(183, 28, 28, 0.1);
+        box-shadow: 0 6px 20px rgba(139, 0, 0, 0.5), 0 0 0 10px rgba(139, 0, 0, 0.1);
     }
     100% {
-        box-shadow: 0 6px 20px rgba(183, 28, 28, 0.4);
+        box-shadow: 0 6px 20px rgba(139, 0, 0, 0.3);
     }
 } 
