@@ -184,29 +184,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Back to top button
-    const backToTopButton = document.querySelector('.back-to-top');
-    
-    if (backToTopButton) {
-        // Show/hide back to top button based on scroll position
-        window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 300) {
-                backToTopButton.classList.add('show');
-            } else {
-                backToTopButton.classList.remove('show');
-            }
-        });
-        
-        // Scroll to top when button is clicked
-        backToTopButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    }
-    
     // Анимация появления элементов при прокрутке
     const animateOnScroll = function() {
         // Skip animations on history page
