@@ -155,32 +155,26 @@
         background-color: transparent; /* Remove background rectangle */
     }
 
-    /* Create organic, beautiful white line */
-    nav#desktop-navigation ul li a::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 3px; /* Slightly thicker for better visibility */
-        bottom: -2px; /* Position below the text */
-        left: 50%;
-        background: linear-gradient(90deg, transparent, var(--header-text), transparent); /* Gradient for organic look */
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth organic animation */
-        transform: translateX(-50%);
-        border-radius: 2px; /* Rounded edges for organic look */
-        opacity: 0;
+    /* Completely remove white lines from desktop navigation */
+    nav#desktop-navigation ul li a::after,
+    nav#desktop-navigation ul li a::before {
+        display: none !important;
     }
 
-    nav#desktop-navigation ul li a:hover::after,
-    nav#desktop-navigation ul li a.active::after {
-        width: 85%; /* Slightly wider for better proportion */
-        opacity: 1;
+    nav#desktop-navigation ul li a:hover {
+        background-color: rgba(183, 28, 28, 0.1);
+        color: var(--accent-color);
+        transform: translateY(-1px);
     }
 
-    nav#desktop-navigation ul li a:hover,
     nav#desktop-navigation ul li a.active {
-        background-color: transparent; /* No background rectangle */
-        transform: translateY(-1px); /* Subtle lift effect */
-        text-shadow: 0 1px 3px rgba(0,0,0,0.2); /* Subtle text shadow for depth */
+        color: var(--accent-color);
+        font-weight: 600;
+    }
+
+    nav#desktop-navigation ul li a.active::after,
+    nav#desktop-navigation ul li a.active::before {
+        display: none !important;
     }
 
     /* Adjust header-right layout for desktop */
