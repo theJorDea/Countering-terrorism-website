@@ -155,21 +155,14 @@
         background-color: rgba(183, 28, 28, 0.7);
     }
 
+    /* Remove white lines from desktop navigation */
     nav#desktop-navigation ul li a::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 2px;
-        bottom: 0;
-        left: 50%;
-        background-color: var(--header-text);
-        transition: all 0.3s ease;
-        transform: translateX(-50%);
+        display: none !important;
     }
 
     nav#desktop-navigation ul li a:hover::after,
     nav#desktop-navigation ul li a.active::after {
-        width: 80%;
+        display: none !important;
     }
 
     nav#desktop-navigation ul li a:hover,
